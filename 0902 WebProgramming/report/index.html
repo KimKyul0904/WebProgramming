@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 소개</title>
+    <style>
+        body{
+            background-color: antiquewhite;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        hr {
+            height: 2px;
+            border: solid black;
+            background-color: black;
+            margin-bottom: 5%;
+        }
+        h1{
+            text-align: center;
+        }
+        
+        img{
+            width: 300px;
+            height: 300px;
+            display:none;
+        }
+    </style>
+
+    <script>
+        function show(){
+            document.getElementById("fig").src="./profile.png";
+            fig.style.display = "block";
+        }
+
+        function hide(){
+            document.getElementById("fig").src="";
+            fig.style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <h1 onmouseover="show()" onmouseout="hide()">곽동민</h1>
+    <hr>
+    <div>
+        <img id="fig" src="">
+    </div>
+    <h2>대학교 - 경성대학교</h2>
+    <h2>전공 - 소프트웨어</h2>
+    <h2>학번 - 2023564003</h2>
+</body>
+</html>
