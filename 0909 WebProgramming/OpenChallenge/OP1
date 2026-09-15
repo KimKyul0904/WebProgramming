@@ -37,11 +37,11 @@
     <table>
         <caption>스마트폰샘플</caption>
         <tbody>
-            <td><img src="./iphone16.png" alt="iphone16" width="200px" height="200px"></td>
-            <td><img src="./iphone17.png" alt="iphone17" width="200px" height="200px"></td>
-            <td><img src="./iphone18pro.png" alt="iphone18pro" width="200px" height="200px"></td>
-            <td><img src="./iphoneAir.png" alt="iphoneAir" width="200px" height="200px"></td>
-            <td><img src="./iphoneDuo.png" alt="iphoneDuo" width="200px" height="200px"></td>
+            <td><img src="./iphone5.png" alt="iphone16" width="200px" height="200px"></td>
+            <td><img src="./iphone8.png" alt="iphone17" width="200px" height="200px"></td>
+            <td><img src="./iphone11pro.png" alt="iphone18pro" width="200px" height="200px"></td>
+            <td><img src="./iphone17.png" alt="iphoneAir" width="200px" height="200px"></td>
+            <td><img src="./iphoneduo.png" alt="iphoneDuo" width="200px" height="200px"></td>
         </tbody>
     </table>
 </body>
