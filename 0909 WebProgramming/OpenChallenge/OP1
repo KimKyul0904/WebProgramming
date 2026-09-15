@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 기술 소개</title>
+</head>
+<body>
+    <h1>스마트폰</h1>
+    <p>스마트폰은 컴퓨터를 결합한 무선 휴대전화기이다. PC에서 실행되는 운영체제보다 작게 만든 모바일 운영체제를 탑재하여 인터넷 검색, 전자우편, 간단한 문서 편집, 카메라, 오디오 및 비디오 재생 등 PC의 기능을 거의 모두 갖추고 있다.</p>
+    <audio src="./music_without_copyright.mp3" controls>저작권 없는 음악</audio>
+    <h2>목차</h2>
+    <ul>
+        <a href="#history">
+            <li>역사</li>
+        </a><a href="#android">
+            <li>안드로이드폰</li>
+        </a><a href="#iphone">
+            <li>아이폰</li>
+        </a><a href="#sample">
+            <li>샘플</li>
+        </a>
+    </ul>
+
+    <h2 id="history">역사</h2>
+    <p>최초의 스마트폰은 사이먼(Symon)으로 추정된다...</p>
+    
+    <h2 id="android">안드로이드</h2>
+    <p>안드로이드(영어: Android)는 휴대전화를 비롯한...</p>
+
+    <a href="https://en.wikipedia.org/wiki/IPhone" target="_blank">
+        <h2 id="iphone">아이폰</h2>
+    </a>
+    <p>아이폰(영어: iphone)은 2007년 1월 9일, 애플이 발표한 휴대 전화 시리즈이다. 미국 샌프란시스코에서 열린 맥월드 2007에서 애플의 창업자 중 한명인 스티브 잡스가 발표했다</p>
+
+    <h2 id="sample">샘플</h2>
+    <table>
+        <caption>스마트폰샘플</caption>
+        <tbody>
+            <td><img src="./iphone16.png" alt="iphone16" width="200px" height="200px"></td>
+            <td><img src="./iphone17.png" alt="iphone17" width="200px" height="200px"></td>
+            <td><img src="./iphone18pro.png" alt="iphone18pro" width="200px" height="200px"></td>
+            <td><img src="./iphoneAir.png" alt="iphoneAir" width="200px" height="200px"></td>
+            <td><img src="./iphoneDuo.png" alt="iphoneDuo" width="200px" height="200px"></td>
+        </tbody>
+    </table>
+</body>
+</html>
