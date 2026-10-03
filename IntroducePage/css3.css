@@ -1,9 +1,8 @@
 @charset "UTF-8";
 
-/* 웹폰트: Pretendard (무료, 상업적 이용 가능) */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-/* ===== 기본 설정 ===== */
+
 * {
     margin: 0;
     padding: 0;
@@ -27,14 +26,12 @@ a:hover {
     color: #3b6fd8;
 }
 
-/* ===== 전체 감싸는 박스 ===== */
 .wrapper {
     max-width: 720px;
     margin: 40px auto;
     padding: 0 16px;
 }
 
-/* ===== 제목 ===== */
 h1 {
     text-align: center;
     font-size: 36px;
@@ -55,7 +52,6 @@ h3 {
     margin-bottom: 4px;
 }
 
-/* ===== 각 섹션을 카드처럼 ===== */
 section {
     background-color: #fff;
     border-radius: 12px;
@@ -64,7 +60,6 @@ section {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* ===== My information ===== */
 #my_info {
     text-align: center;
 }
@@ -95,7 +90,6 @@ section {
     width: 80px;
 }
 
-/* 이름 행: th는 숨기고 이름만 크게 */
 #myname th {
     display: none;
 }
@@ -107,12 +101,10 @@ section {
     padding-bottom: 12px;
 }
 
-/* ===== About ===== */
 #about p {
     color: #555;
 }
 
-/* ===== Contact ===== */
 #contact ul {
     list-style: none;
 }
@@ -126,13 +118,13 @@ section {
     width: 28px;
 }
 
-/* 이모지는 깨지지 않도록 유니코드 코드로 작성 */
-#contact li:nth-child(1)::before { content: "\1F4DE"; } /* 전화 */
-#contact li:nth-child(2)::before { content: "\2709"; }  /* 이메일 */
-#contact li:nth-child(3)::before { content: "\1F464"; } /* 페이스북 */
-#contact li:nth-child(4)::before { content: "\1F4DD"; } /* 블로그 */
 
-/* ===== Skills ===== */
+#contact li:nth-child(1)::before { content: "\1F4DE"; } 
+#contact li:nth-child(2)::before { content: "\2709"; }  
+#contact li:nth-child(3)::before { content: "\1F464"; } 
+#contact li:nth-child(4)::before { content: "\1F4DD"; } 
+
+
 #skill ol {
     list-style: none;
     display: flex;
@@ -149,7 +141,7 @@ section {
     font-weight: bold;
 }
 
-/* ===== Projects ===== */
+
 #project ol {
     list-style: none;
 }
@@ -172,7 +164,7 @@ section {
     margin-bottom: 12px;
 }
 
-/* 영상 파일, 유튜브 둘 다 같은 크기(16:9)로 */
+
 #project video,
 #project iframe {
     display: block;
