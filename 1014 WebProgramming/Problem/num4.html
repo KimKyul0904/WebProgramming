@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>방문 요일</title>
+	<script>
+		function goldColor(obj) {
+			obj.document.body.style.backgroundColor = "gold";
+		}
+		function pinkColor(obj) {
+			obj.document.body.style.backgroundColor = "pink";
+		}
+	</script>
+</head>
+<body>
+	<h3>일요일은 pink, 다른 요일은 gold 배경</h3>
+	<hr>
+	<script>
+		var current = new Date();
+		var day;
+
+		switch(current.getDay()){
+			case 0:
+				day="일요일";
+				break;
+			case 1:
+				day="월요일";
+				break;
+			case 2:
+				day="화요일";
+				break;
+			case 3:
+				day="수요일";
+				break;
+			case 4:
+				day="목요일";
+				break;
+			case 5:
+				day="금요일";
+				break;
+			case 6:
+				day="토요일";
+				break;
+		}
+		document.write("오늘 : "+current.getDate()+"일, "+day);
+
+		if(day=="일요일") pinkColor(this);
+		else goldColor(this);
+	</script>
+</body>
+</html>

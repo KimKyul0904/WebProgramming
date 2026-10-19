@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>방문 시간에 따른 배경 변화</title>
+	<script>
+		function AMColor(obj){
+			obj.document.body.style.backgroundColor = "lightskyblue";
+		}
+		function PMColor(obj){
+			obj.document.body.style.backgroundColor = "Orange";
+		}
+	</script>
+</head>
+<body>
+	<h3>오전이면 lightskyblue, 오후이면 orange 배경</h3>
+	<hr>
+	<script>
+		var current = new Date();
+		var hour = current.getHours();
+		if(hour<=12) AMColor(this);
+		else PMColor(this);
+
+
+		document.write('현재 시간: ');
+		document.write(current.getHours(),'시, ');
+		document.write(current.getMinutes(),'분, ');
+		document.write(current.getSeconds(),'초');
+	</script>
+</body>
+</html>
