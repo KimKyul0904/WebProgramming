@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>17개의 CSS 색이름과 색</title>
+	<style>
+		div{
+			display: inline-block;
+			width: 60px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h3>17개의 CSS 색이름과 색</h3>
+	<hr>
+	<script>
+		var colorNames = ["maroon","red","orange","yellow","olive","purple","fuchsia","white","lime","green","navy","blue","aqua","teal","black","silver","gray"];
+
+		for(var i=0;i<colorNames.length;i++){
+			document.write('<div style="background:'+colorNames[i]+'">'+colorNames[i]+'</div>');
+		}
+	</script>
+</body>
+</html>
