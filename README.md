@@ -1,6 +1,6 @@
 # 🌐 Web Programming
 
-웹 프로그래밍 과목 실습 및 과제 저장소입니다. HTML/CSS로 시작해 JavaScript까지, 매주 학습한 내용을 `Problem`(기본 문제풀이)과 `OpenChallenge`(자유 과제) 형태로 정리하고 있습니다.
+웹 프로그래밍 과목 실습 및 과제 저장소입니다. HTML/CSS로 시작해 JavaScript 기초, DOM 조작, 이벤트 처리까지, 매주 학습한 내용을 `Problem`(기본 문제풀이)과 `OpenChallenge`(자유 과제) 형태로 정리하고 있습니다.
 
 ## 🛠️ 기술 스택
 
@@ -41,6 +41,14 @@ WebProgramming/
 │   ├── Problem/        # num1~num10: 난수, 배열, Date, 문자열 처리, 객체(book)
 │   └── OpenChallenge/  # 배열로 리스트 만들기(1.html)
 │
+├── 1028 WebProgramming/
+│   ├── Problem/        # 01~10: DOM 객체 탐색·스타일 변경, z-index, transform, 요소 동적 생성/삭제
+│   └── OpenChallenge/  # 갬블링 게임(8.html)
+│
+├── 1104 WebProgramming/
+│   ├── Problem/        # 1~10: 이벤트 처리 (onblur/onfocus, onkeydown, onmousemove, onwheel, 이벤트 target), 계산기
+│   └── OpenChallenge/  # 마우스 클릭으로 이미지 옮기기(9.html)
+│
 ├── IntroducePage/      # 자기소개 페이지 (index.html, css3.css, busan.mp4)
 └── README.md
 ```
@@ -58,6 +66,8 @@ WebProgramming/
 | 09/30 | `0930 WebProgramming` | `<div>` 박스 구성, `position: fixed`, `float` 배치, 리스트(`ul`/`ol`)와 수직 메뉴, `@keyframes` 애니메이션, `transition`, 목차(앵커) 링크, 라디오·체크박스 설문 |
 | 10/07 | `1007 WebProgramming` | JavaScript 코드 작성 위치(인라인·`<script>`·외부 `.js`), `document.write()`, `prompt()`, 함수, `eval()` |
 | 10/14 | `1014 WebProgramming` | `Math.random()`, 배열 다루기(`sort`, `split`), `Date` 객체, 객체 생성(생성자 함수), 조건에 따른 배경색 변경 |
+| 10/28 | `1028 WebProgramming` | `getElementById` / `getElementsByTagName`으로 DOM 객체 선택, `style` 속성 변경, `visibility`·`z-index`·`transform`(`rotate`, `scale`), `innerHTML`, `createElement` / `appendChild` / `removeChild`, `addEventListener` |
+| 11/04 | `1104 WebProgramming` | `window.onblur` / `onfocus`, `onchange`(라디오 버튼), `onkeydown`(Enter 키), `onmousemove`(이미지 커서), `ondblclick`, `onwheel`, `onmouseover` / `onmouseout`, 이벤트 객체의 `target`, `onload` |
 | - | `IntroducePage` | 지금까지 배운 HTML/CSS를 종합한 자기소개 페이지 |
 
 ## ✨ 핵심 학습 요약
@@ -83,6 +93,24 @@ WebProgramming/
 - **Date 객체**: 방문 시각(오전/오후), 요일에 따라 `style.backgroundColor` 를 바꾸는 페이지 제작.
 - **객체**: `book` 객체를 만들어 보며 생성자 함수(`function Book()` + `new`)로 객체를 생성하는 방법 학습.
 
+### DOM 조작 (10/28)
+
+- **DOM 객체 선택**: `getElementById()`, `getElementsByTagName()`으로 요소를 찾아 반복문으로 `style.color` 등을 일괄 변경.
+- **계산된 스타일**: `window.getComputedStyle()`로 현재 `visibility` 값을 읽어 show/hide 토글 구현.
+- **스타일 동적 변경**: `z-index`로 카드 겹침 순서 바꾸기, `transform: rotate()` / `scale()`로 클릭 시 이미지 회전·확대.
+- **내용 변경**: `innerHTML`과 `prompt()`를 조합해 텍스트·HTML을 즉석에서 교체, `eval()`로 클릭하면 계산 결과 표시.
+- **요소 동적 생성/삭제**: `createElement()` → `appendChild()`로 항목 추가, `removeChild()`로 삭제. 이벤트 리스너는 `onclick` 속성 방식과 `addEventListener()` 방식을 비교.
+- **OpenChallenge**: `Math.random()`으로 세 칸의 숫자를 뽑아 모두 같으면 성공하는 갬블링 게임 제작.
+
+### 이벤트 처리 (11/04)
+
+- **포커스 이벤트**: 브라우저 창이 포커스를 잃거나(`onblur`) 얻을 때(`onfocus`) 배경색 변경.
+- **폼 이벤트**: 라디오 버튼 `onchange`로 선택한 과일 이미지 출력, 텍스트 입력창에서 `onkeydown`의 `e.key == "Enter"`로 수식 계산.
+- **마우스 이벤트**: `onmousemove`로 이미지가 마우스를 따라다니는 커서, `ondblclick`으로 랜덤 배경색, `onwheel`로 이미지 확대/축소.
+- **이벤트 객체의 `target`**: `onmouseover` / `onmouseout`에서 `e.target.tagName`으로 `<span>`에만 밑줄 적용, 클릭한 `<li>`만 글자 크게 만들기, 항목 위에 마우스를 올리면 설명 표시.
+- **페이지 로드**: `<body onload="init()">`로 문서가 로드된 뒤 이벤트 리스너 등록.
+- **종합 실습**: 버튼 이벤트를 연결한 계산기(Back / CE / C / `=`)와, 10×10 표에서 클릭한 칸으로 이미지가 이동하는 OpenChallenge 제작.
+
 ## 🙋 자기소개 페이지 (IntroducePage)
 
 HTML/CSS 실습 내용을 활용해 만든 자기소개 페이지입니다.
@@ -101,6 +129,8 @@ cd WebProgramming
 ```
 
 > `IntroducePage`는 `index.html`을 열면 되고, `css3.css`와 같은 폴더에 있어야 스타일이 적용됩니다.
+>
+> 일부 실습 파일(`1028 WebProgramming`, `1104 WebProgramming` 등)은 `../../media/` 경로의 이미지를 참조하지만 해당 폴더는 저장소에 포함되어 있지 않아, 이미지가 보이지 않을 수 있습니다.
 
 ---
 
