@@ -50,6 +50,7 @@ WebProgramming/
 │   └── OpenChallenge/  # 마우스 클릭으로 이미지 옮기기(9.html)
 │
 ├── IntroducePage/      # 자기소개 페이지 (index.html, css3.css, busan.mp4)
+├── Portfolio/          # 보안 진로 포트폴리오 사이트 (index.html 한 파일)
 └── README.md
 ```
 
@@ -69,6 +70,7 @@ WebProgramming/
 | 10/28 | `1028 WebProgramming` | `getElementById` / `getElementsByTagName`으로 DOM 객체 선택, `style` 속성 변경, `visibility`·`z-index`·`transform`(`rotate`, `scale`), `innerHTML`, `createElement` / `appendChild` / `removeChild`, `addEventListener` |
 | 11/04 | `1104 WebProgramming` | `window.onblur` / `onfocus`, `onchange`(라디오 버튼), `onkeydown`(Enter 키), `onmousemove`(이미지 커서), `ondblclick`, `onwheel`, `onmouseover` / `onmouseout`, 이벤트 객체의 `target`, `onload` |
 | - | `IntroducePage` | 지금까지 배운 HTML/CSS를 종합한 자기소개 페이지 |
+| - | `Portfolio` | HTML/CSS/JavaScript를 종합한 인터랙티브 포트폴리오 사이트 |
 
 ## ✨ 핵심 학습 요약
 
@@ -119,6 +121,14 @@ HTML/CSS 실습 내용을 활용해 만든 자기소개 페이지입니다.
 - 외부 CSS(`css3.css`)와 Pretendard 웹폰트 적용, 카드형 섹션 디자인
 - `mailto:` / `tel:` 링크, `<iframe>`으로 유튜브 영상 삽입, `<video>`로 부산 영상(`busan.mp4`) 삽입
 
+## 🛡️ 포트폴리오 사이트 (Portfolio)
+
+정보보안 진로(최종 목표: KISA)를 주제로 만든 한 페이지짜리 포트폴리오 사이트입니다. 외부 파일 없이 `index.html` 하나에 HTML/CSS/JS가 모두 들어 있습니다.
+
+- **구성**: About(학력 포함) · Why Security(국내 주요 보안 사고) · Award(2025 K-HiTech 장려상, AZAS) · Projects · Skills · Journey · Contact
+- **CSS**: CSS 변수, `grid` 레이아웃, `@keyframes` 애니메이션(오로라 배경, 흐르는 기술 띠, 그라디언트 텍스트), `@media` 반응형, `prefers-reduced-motion` 대응
+- **JavaScript**: `IntersectionObserver`로 스크롤 등장 효과와 숫자 카운트업, 스크롤 위치에 따라 단어가 밝아지는 문장과 차오르는 타임라인, 현재 섹션을 따라가는 내비게이션 하이라이트, 터미널 타이핑 효과, `navigator.clipboard`로 이메일 복사
+
 ## ▶️ 실행 방법
 
 각 폴더 안의 `.html` 파일을 다운로드한 뒤, 웹 브라우저(Chrome, Edge 등)로 드래그하거나 더블클릭하여 열면 결과물을 확인할 수 있습니다.
@@ -128,6 +138,8 @@ git clone https://github.com/KimKyul0904/WebProgramming.git
 cd WebProgramming
 ```
 
+> `Portfolio`는 `Portfolio/index.html`을 바로 열면 됩니다.
+>
 > `IntroducePage`는 `index.html`을 열면 되고, `css3.css`와 같은 폴더에 있어야 스타일이 적용됩니다.
 >
 > 일부 실습 파일(`1028 WebProgramming`, `1104 WebProgramming` 등)은 `../../media/` 경로의 이미지를 참조하지만 해당 폴더는 저장소에 포함되어 있지 않아, 이미지가 보이지 않을 수 있습니다.
