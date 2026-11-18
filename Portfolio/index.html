@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김결 | 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090d; --bg2:#0d1117; --card:#10151d; --line:#1e2632; --line2:#2a3442;
+  --text:#eef1f5; --muted:#8b95a5; --dim:#3a4352;
+  --g1:#34e2a0; --g2:#3bb4ff; --g3:#8b7bff; --gold:#f4c35a;
+  --grad:linear-gradient(90deg,var(--g1),var(--g2) 50%,var(--g3));
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --disp:'Space Grotesk','IBM Plex Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;word-break:keep-all;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+::selection{background:var(--g1);color:#000}
+
+/* 배경: 은은한 그리드 + 오로라 */
+.bg-grid{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;opacity:.35;mask-image:radial-gradient(ellipse at 50% 0%,#000 20%,transparent 70%)}
+.aurora{position:fixed;z-index:-1;width:900px;height:900px;border-radius:50%;filter:blur(140px);opacity:.22;pointer-events:none}
+.a1{background:var(--g3);top:-400px;left:-200px;animation:float1 18s ease-in-out infinite}
+.a2{background:var(--g1);top:-300px;right:-300px;animation:float2 22s ease-in-out infinite;opacity:.14}
+@keyframes float1{50%{transform:translate(160px,120px)}}
+@keyframes float2{50%{transform:translate(-140px,180px)}}
+.cursor-glow{position:fixed;z-index:-1;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(59,180,255,.10),transparent 65%);pointer-events:none;transform:translate(-50%,-50%);transition:opacity .3s}
+
+/* 상단 진행바 */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:100;box-shadow:0 0 12px var(--g2)}
+
+/* 떠 있는 알약 내비 */
+nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 18px;background:rgba(16,21,29,.72);backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:999px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.brand{font-family:var(--disp);font-weight:700;margin-right:10px;white-space:nowrap}
+.brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:6px}
+.nav-links{position:relative;display:flex}
+.nav-links a{position:relative;z-index:1;padding:7px 14px;font-size:.88rem;color:var(--muted);border-radius:999px;transition:color .25s;white-space:nowrap}
+.nav-links a.active{color:var(--text)}
+.pill{position:absolute;top:0;height:100%;border-radius:999px;background:var(--line2);transition:left .35s cubic-bezier(.4,.2,.2,1),width .35s cubic-bezier(.4,.2,.2,1),opacity .3s;opacity:0}
+.nav-cta{padding:8px 16px;border-radius:999px;background:var(--text);color:#000;font-size:.86rem;font-weight:700;white-space:nowrap}
+@media(max-width:820px){.nav-links{display:none}nav{padding-left:16px}}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.25fr .9fr;gap:40px;align-items:center;padding-top:110px;padding-bottom:60px}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:130px}}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid var(--line2);border-radius:999px;font-size:.85rem;color:var(--muted);background:rgba(16,21,29,.6)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--g1);box-shadow:0 0 0 0 rgba(52,226,160,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(52,226,160,0)}100%{box-shadow:0 0 0 0 rgba(52,226,160,0)}}
+.hero h1{font-family:var(--disp);font-size:clamp(3.2rem,9vw,6.4rem);line-height:1;letter-spacing:-.03em;margin:26px 0 14px}
+.hero h1 .ko{display:block;font-family:'IBM Plex Sans KR';font-size:.32em;letter-spacing:0;color:var(--muted);font-weight:500;margin-top:14px}
+.grad-text{background:var(--grad);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.role{font-family:var(--disp);font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:700;margin-bottom:24px}
+.lead{font-size:1.12rem;font-weight:500;margin-bottom:6px}
+.lead-sub{color:var(--muted);max-width:560px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;font-size:.95rem;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:none;font-family:inherit}
+.btn-w{background:var(--text);color:#000}
+.btn-w:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(238,241,245,.18)}
+.btn-o{border:1px solid var(--line2);color:var(--text);background:transparent}
+.btn-o:hover{background:var(--card);transform:translateY(-2px)}
+.loc{color:var(--muted);font-size:.88rem;margin-left:6px}
+
+/* 터미널 */
+.term{background:rgba(13,17,23,.85);border:1px solid var(--line2);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(59,180,255,.05);font-family:var(--mono);font-size:.86rem;transform:perspective(1000px) rotateY(-6deg) rotateX(3deg);transition:transform .5s}
+.term:hover{transform:none}
+.term-bar{display:flex;gap:7px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.term-bar i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.term-bar i:nth-child(2){background:#febc2e}.term-bar i:nth-child(3){background:#28c840}
+.term-bar span{margin-left:auto;color:var(--dim);font-size:.75rem}
+.term-body{padding:18px 18px 22px;min-height:270px;white-space:pre-wrap}
+.term-body .p{color:var(--g1)}.term-body .o{color:var(--muted)}.term-body .h{color:var(--gold)}.term-body .b{color:var(--g2)}
+.caret{display:inline-block;width:8px;height:1.05em;background:var(--g1);vertical-align:-2px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* 섹션 공통 */
+section{padding:120px 0;position:relative}
+.eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--g1);letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--g1)}
+.h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.25;font-weight:700;margin-bottom:46px;letter-spacing:-.01em}
+.h2 .dim{color:var(--dim)}
+
+/* 등장 애니메이션 */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+/* 스포트라이트 카드 */
+.spot{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .3s,transform .3s}
+.spot::before{content:'';position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(59,180,255,.13),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.spot:hover{border-color:var(--line2);transform:translateY(-4px)}
+.spot:hover::before{opacity:1}
+
+/* 통계 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+@media(max-width:760px){.stats{grid-template-columns:1fr}}
+.stat{padding:34px 30px}
+.stat .num{font-family:var(--disp);font-size:clamp(3rem,6vw,4.4rem);font-weight:700;line-height:1;letter-spacing:-.03em}
+.stat .num small{font-size:.4em;margin-left:4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat p{color:var(--muted);margin-top:12px;font-size:.95rem}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.values{grid-template-columns:1fr}}
+.value{padding:30px}
+.icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(59,180,255,.08);border:1px solid rgba(59,180,255,.2);margin-bottom:22px;color:var(--g2)}
+.value h3{font-family:var(--disp);font-size:1.2rem;margin-bottom:8px}
+.value p{color:var(--muted);font-size:.93rem}
+
+
+/* 학력 */
+.edu{margin-top:18px;padding:34px 30px}
+.edu h4{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-weight:400;margin-bottom:28px}
+.edu-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.edu-steps::before{content:'';position:absolute;top:9px;left:9px;right:12%;height:2px;background:linear-gradient(90deg,var(--line2),var(--g2))}
+.es{position:relative;padding-right:18px}
+.es::before{content:'';position:relative;display:block;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--line2);margin-bottom:18px;z-index:1}
+.es.now::before{background:var(--g1);border-color:var(--g1);box-shadow:0 0 14px var(--g1)}
+.es .tag{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.es b{display:block;font-size:1rem;margin:4px 0 4px;line-height:1.4}
+.es p{font-size:.85rem;color:var(--muted)}
+.es .move{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.72rem;color:var(--gold);border:1px solid rgba(244,195,90,.35);border-radius:999px;padding:2px 9px}
+.es.now b{color:var(--g1)}
+@media(max-width:760px){
+  .edu-steps{grid-template-columns:1fr;gap:22px;padding-left:34px}
+  .edu-steps::before{top:0;bottom:0;left:8px;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--line2),var(--g2))}
+  .es::before{position:absolute;left:-34px;top:2px;margin:0}
+}
+/* 스크롤 문장 */
+.manifesto{font-size:clamp(1.7rem,4.2vw,3rem);font-weight:700;line-height:1.45;letter-spacing:-.01em}
+.manifesto .w{color:var(--dim);transition:color .25s}
+.manifesto .w.lit{color:var(--text)}
+.manifesto .w.acc.lit{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 수상 */
+.award{padding:44px;display:grid;grid-template-columns:auto 1fr;gap:40px;border-color:rgba(244,195,90,.25);background:linear-gradient(140deg,rgba(244,195,90,.08),var(--card) 45%)}
+@media(max-width:760px){.award{grid-template-columns:1fr;padding:30px}}
+.medal{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:700;color:#2b1d00;background:conic-gradient(from 0deg,#f4c35a,#ffe7a3,#d99a25,#f4c35a);box-shadow:0 0 50px rgba(244,195,90,.35);position:relative;animation:spin 14s linear infinite}
+.medal span{animation:spin 14s linear infinite reverse;display:block;line-height:1.3}
+@keyframes spin{to{transform:rotate(360deg)}}
+.award h3{font-size:1.6rem;margin-bottom:6px}
+.award .meta{font-family:var(--mono);font-size:.85rem;color:var(--gold);margin-bottom:22px}
+.award dl{display:grid;grid-template-columns:90px 1fr;gap:12px 18px}
+.award dt{color:var(--muted);font-size:.9rem}
+.award dd{font-size:.98rem}
+
+/* 프로젝트 */
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.projects{grid-template-columns:1fr}}
+.proj{padding:30px;display:flex;flex-direction:column;min-height:320px}
+.proj .kind{font-family:var(--mono);font-size:.78rem;color:var(--g1);margin-bottom:auto}
+.proj .num{font-family:var(--disp);font-size:4rem;font-weight:700;color:var(--line2);line-height:1;margin:20px 0 10px;transition:color .3s}
+.proj:hover .num{color:var(--g2)}
+.proj h3{font-size:1.25rem;margin-bottom:8px}
+.proj p{color:var(--muted);font-size:.93rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.chips span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line2);color:var(--muted)}
+.proj.todo{border-style:dashed}
+
+
+.certs{list-style:none;margin-top:6px;flex:1}
+.certs li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--line2);font-size:.95rem}
+.certs li:last-child{border:none}
+.certs li span{font-family:var(--mono);font-size:.7rem;padding:3px 9px;border-radius:999px;border:1px solid rgba(59,180,255,.35);color:var(--g2);white-space:nowrap}
+.certs li.main{font-weight:700}
+.certs li.main span{border-color:rgba(244,195,90,.45);color:var(--gold)}
+/* 기술: 흐르는 띠 */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-bottom:56px;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.track{display:flex;gap:46px;width:max-content;animation:marq 32s linear infinite}
+.track span{font-family:var(--disp);font-size:1.6rem;font-weight:700;color:var(--dim);white-space:nowrap;transition:color .3s}
+.track span:hover{color:var(--text)}
+.track span.hl{color:var(--muted)}
+@keyframes marq{to{transform:translateX(-50%)}}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.skill-grid{grid-template-columns:1fr}}
+.sk{padding:28px}
+.sk h4{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-weight:400;margin-bottom:20px}
+.bar{margin-bottom:16px}
+.bar .row{display:flex;justify-content:space-between;font-size:.93rem;margin-bottom:7px}
+.bar .row em{font-style:normal;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.bar .t{height:4px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar .f{height:100%;width:0;background:var(--grad);border-radius:9px;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+
+/* 타임라인 */
+.tl{position:relative;padding-left:40px}
+.tl-line{position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--line)}
+.tl-fill{position:absolute;left:11px;top:0;width:2px;height:0;background:var(--grad);background-size:100% 600px;box-shadow:0 0 12px var(--g2)}
+.ti{position:relative;padding:4px 0 44px}
+.ti::before{content:'';position:absolute;left:-35px;top:10px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--line2);transition:all .4s}
+.ti.on::before{border-color:var(--g1);background:var(--g1);box-shadow:0 0 14px var(--g1)}
+.ti.gold.on::before{border-color:var(--gold);background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.ti.goal.on::before{width:20px;height:20px;left:-38px;top:7px;background:var(--grad);border:none;box-shadow:0 0 24px var(--g2)}
+.ti .d{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.ti h4{font-size:1.25rem;margin:4px 0}
+.ti p{color:var(--muted);font-size:.95rem}
+.ti.goal h4{font-size:1.6rem}
+.ti.future .d::after{content:' · 계획';color:var(--g2)}
+
+
+/* WHY SECURITY: 사고 로그 */
+.why-head{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end;margin-bottom:50px}
+@media(max-width:860px){.why-head{grid-template-columns:1fr}}
+.why-head .h2{margin-bottom:16px}
+.why-head p{color:var(--muted)}
+.big-stat{padding:30px;border-color:rgba(255,92,92,.25);background:linear-gradient(140deg,rgba(255,92,92,.08),var(--card) 55%)}
+.big-stat .num{font-family:var(--disp);font-size:clamp(3rem,7vw,4.6rem);font-weight:700;line-height:1;color:#ff6b6b;letter-spacing:-.03em}
+.big-stat .num small{font-size:.38em;margin-left:6px;color:var(--text)}
+.big-stat p{color:var(--muted);font-size:.9rem;margin-top:10px}
+.big-stat .up{font-family:var(--mono);color:#ff6b6b;font-size:.85rem}
+.incidents{display:flex;flex-direction:column;gap:14px}
+.inc{display:grid;grid-template-columns:150px 1fr;gap:28px;padding:28px 30px;border-left:3px solid #ff5c5c;border-radius:6px 20px 20px 6px}
+@media(max-width:860px){.inc{grid-template-columns:1fr;gap:14px}}
+.inc .when{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.sev{display:inline-block;font-family:var(--mono);font-size:.68rem;font-weight:600;padding:3px 8px;border-radius:5px;background:rgba(255,92,92,.12);color:#ff6b6b;border:1px solid rgba(255,92,92,.35);margin-bottom:8px;animation:sevblink 2.4s ease-in-out infinite}
+@keyframes sevblink{50%{opacity:.55}}
+.inc .co{font-size:1.25rem;font-weight:700;line-height:1.3}
+.inc .co small{display:block;font-size:.8rem;color:var(--muted);font-weight:400;margin-top:2px}
+.inc .scale{font-family:var(--disp);font-size:2.2rem;font-weight:700;line-height:1.1;margin-bottom:6px}
+.inc .scale small{font-size:.45em;color:var(--muted);margin-left:4px;font-weight:500}
+.inc .cause{color:var(--muted);font-size:.92rem}
+.inc .lesson{font-size:.95rem;padding:14px 16px;border-radius:12px;background:rgba(52,226,160,.06);border:1px solid rgba(52,226,160,.18);align-self:center}
+.inc .lesson b{display:block;font-family:var(--mono);font-size:.72rem;color:var(--g1);font-weight:600;margin-bottom:4px;letter-spacing:.05em}
+.inc.mine{border-left-color:var(--gold);grid-template-columns:150px 1.05fr 1.2fr}
+@media(max-width:860px){.inc.mine{grid-template-columns:1fr}}
+.inc.mine .lesson{background:rgba(244,195,90,.07);border-color:rgba(244,195,90,.3)}
+.inc.mine .lesson b{color:var(--gold)}
+.why-close{margin-top:56px;text-align:center;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;line-height:1.5}
+.why-close span{color:var(--muted);font-weight:500;display:block;font-size:.6em;margin-top:8px}
+.sources{margin-top:34px;font-size:.75rem;color:var(--dim);text-align:center;font-family:var(--mono)}
+.sources a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+
+/* 연락 */
+.contact{text-align:center;padding:160px 0 130px}
+.contact h2{font-size:clamp(2.4rem,7vw,5.2rem);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-bottom:26px}
+.contact p{color:var(--muted);margin-bottom:40px}
+.contact-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.mail-btn{font-size:1.05rem;padding:16px 28px;box-shadow:0 0 60px rgba(139,123,255,.25)}
+.toast{font-family:var(--mono);font-size:.82rem;color:var(--g1);height:1.4em;margin-top:18px}
+footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);font-size:.78rem;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .manifesto .w{color:var(--text)}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="aurora a1"></div><div class="aurora a2"></div>
+<div class="cursor-glow" id="glow"></div>
+<div class="progress" id="progress"></div>
+
+<nav>
+  <a href="#top" class="brand"><b>KK</b>Kim Kyul</a>
+  <div class="nav-links" id="navLinks">
+    <span class="pill" id="pill"></span>
+    <a href="#about">About</a>
+    <a href="#why">Why</a>
+    <a href="#award">Award</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#journey">Journey</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">연락하기</a>
+</nav>
+
+<!-- HERO -->
+<header class="wrap hero" id="top">
+  <div>
+    <div class="status rv"><span class="dot"></span>경성대학교 소프트웨어학과 · 공부 중</div>
+    <h1 class="rv d1">Kim Kyul<span class="ko">김결</span></h1>
+    <div class="role rv d2"><span class="grad-text">Security Engineer</span> <span style="color:var(--dim)">in progress</span></div>
+    <p class="lead rv d2">만드는 법을 알아야, 지키는 법도 보입니다.</p>
+    <p class="lead-sub rv d3">IoT 스마트 안전모로 2025 K-HiTech 장려상을 받은 경험을 바탕으로, 이제는 시스템을 공격하고 지키는 법을 공부하고 있습니다. 최종 목표는 KISA입니다.</p>
+    <div class="hero-btns rv d3">
+      <a href="#award" class="btn btn-w">수상 경력 보기 ↓</a>
+      <a href="#contact" class="btn btn-o">연락하기 ↗</a>
+      <span class="loc">📍 Busan, Korea</span>
+    </div>
+  </div>
+  <div class="term rv d2" aria-label="자기소개 터미널">
+    <div class="term-bar"><i></i><i></i><i></i><span>kyul@security:~</span></div>
+    <div class="term-body" id="term"></div>
+  </div>
+</header>
+
+<!-- ABOUT / HIGHLIGHTS -->
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow rv">01 — ABOUT</div>
+    <h2 class="h2 rv">숫자로 보는 <span class="grad-text">지금의 나</span></h2>
+    <div class="stats">
+      <div class="spot stat rv"><div class="num"><span class="count" data-to="1">0</span><small>회</small></div><p>전국 대회 수상 · 2025 K-HiTech 장려상</p></div>
+      <div class="spot stat rv d1"><div class="num"><span class="count" data-to="2">0</span><small>개</small></div><p>진행 중인 프로젝트와 기록</p></div>
+      <div class="spot stat rv d2"><div class="num">KISA<span style="font-size:.45em;margin-left:8px">🎯</span></div><p>최종 목표 · 한국인터넷진흥원</p></div>
+    </div>
+    <div class="values">
+      <div class="spot value rv">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+        <h3>IoT Hands-on</h3>
+        <p>라즈베리 파이와 센서, LoRa 통신으로 실제 동작하는 하드웨어를 만들어 봤습니다.</p>
+      </div>
+      <div class="spot value rv d1">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Security Mindset</h3>
+        <p>"이건 어떻게 뚫릴 수 있을까?"를 먼저 묻는 습관을 기르고 있습니다.</p>
+      </div>
+      <div class="spot value rv d2">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M15.5 14.6c2.8-.3 5 1.4 6 4.4"/></svg></div>
+        <h3>Teamwork</h3>
+        <p>밤을 새워가며 팀과 끝까지 결과물을 완성해낸 끈기가 있습니다.</p>
+      </div>
+    </div>
+    <div class="spot edu rv">
+      <h4>// education</h4>
+      <div class="edu-steps">
+        <div class="es"><div class="tag">MIDDLE SCHOOL · 충북 청주</div><b>충북대학교사범대학부설중학교</b><p>졸업</p></div>
+        <div class="es"><div class="tag">HIGH SCHOOL · 충북 청주</div><b>충북대학교사범대학부설고등학교</b><p>1~2학년 재학</p><span class="move">3학년 때 부산으로 이사 →</span></div>
+        <div class="es"><div class="tag">HIGH SCHOOL · 부산</div><b>부산정보고등학교</b><p>졸업</p></div>
+        <div class="es now"><div class="tag">UNIVERSITY · 부산 · 2023.03 –</div><b>경성대학교 소프트웨어학과</b><p>재학 중 (2학년)</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO (스크롤하면 글자가 밝아짐) -->
+<section style="padding:80px 0 140px">
+  <div class="wrap">
+    <p class="manifesto" id="manifesto" data-text="직접 만들어 본 사람이 취약점도 더 잘 봅니다. 그래서 저는 |코드를_짜는_손과 |공격자의_눈을 함께 기르고 있습니다. 작은 기록이 쌓여 |국가_사이버_보안의 한 자리를 지키는 날까지."></p>
+  </div>
+</section>
+
+
+<!-- WHY SECURITY -->
+<section id="why">
+  <div class="wrap">
+    <div class="why-head">
+      <div>
+        <div class="eyebrow rv">02 — WHY SECURITY</div>
+        <h2 class="h2 rv">이 뉴스들을 보며<br><span class="grad-text">보안을 선택했습니다</span></h2>
+        <p class="rv d1">2025년부터 지금까지, 이름만 대면 아는 기업들이 연달아 뚫렸습니다. 뉴스를 볼수록 공통점이 보였습니다. 대부분 최신 해킹 기술이 아니라 <b style="color:var(--text)">지켜지지 않은 기본</b> 때문이었다는 것. 그 기본을 지키는 사람이 되고 싶었습니다.</p>
+      </div>
+      <div class="spot big-stat rv d1">
+        <div class="num"><span class="count" data-to="2383">0</span><small>건</small></div>
+        <p>2025년 민간 분야 침해사고 신고 건수 <span class="up">▲ 26.3%</span><br>과기정통부·KISA 「2026년 상반기 사이버 위협 동향 보고서」</p>
+      </div>
+    </div>
+
+    <div class="incidents">
+      <div class="spot inc rv">
+        <div><span class="sev">CRITICAL</span><div class="when">2025.04</div></div>
+        <div>
+          <div class="co">SK텔레콤 <small>유심(USIM) 정보 해킹</small></div>
+          <div class="scale"><span class="count" data-to="2696">0</span>만<small>건 유출 (IMSI 기준)</small></div>
+          <div class="cause">2021년부터 서버에 악성코드(BPFDoor)가 잠복했고, 유심 인증키는 암호화 없이 저장돼 있었습니다.</div>
+        </div>
+      </div>
+
+      <div class="spot inc mine rv">
+        <div><span class="sev">CRITICAL</span><div class="when">2025.09</div></div>
+        <div>
+          <div class="co">KT <small>불법 펨토셀(초소형 기지국) 무단 소액결제</small></div>
+          <div class="scale"><span class="count" data-to="11">0</span>개월<small>간 내부망 접속</small></div>
+          <div class="cause">관리가 허술했던 펨토셀에서 인증서를 빼내 직접 만든 장비에 복제한 뒤, 통신망에 접속해 결제 인증 문자를 가로챘습니다.</div>
+        </div>
+        <div class="lesson"><b>// 가장 와닿은 사고</b>IoT·통신 장비도 그대로 공격 통로가 됩니다. AZAS에서 센서와 LoRa 통신을 다뤄본 제게, "내가 만든 장비도 이렇게 뚫릴 수 있겠구나"를 처음 실감하게 한 사건입니다.</div>
+      </div>
+
+      <div class="spot inc rv">
+        <div><span class="sev">HIGH</span><div class="when">2025.09</div></div>
+        <div>
+          <div class="co">롯데카드 <small>온라인 결제 서버 해킹</small></div>
+          <div class="scale"><span class="count" data-to="297">0</span>만<small>명 정보 유출</small></div>
+          <div class="cause">작은 파일을 조금씩 빼가는 방식에 보름 넘게 눈치채지 못했고, 약 200GB가 반출됐습니다. 28만 명은 CVC 번호까지 유출됐습니다.</div>
+        </div>
+      </div>
+
+      <div class="spot inc rv">
+        <div><span class="sev">CRITICAL</span><div class="when">2025.11</div></div>
+        <div>
+          <div class="co">쿠팡 <small>고객 개인정보 유출</small></div>
+          <div class="scale"><span class="count" data-to="3370">0</span>만<small>개 계정 노출</small></div>
+          <div class="cause">6월부터 시작된 유출을 5개월이 지나서야 알아챘습니다. 퇴사자 인증키 관리 부실이 원인으로 지목됐습니다.</div>
+        </div>
+      </div>
+
+      <div class="spot inc rv">
+        <div><span class="sev">CRITICAL</span><div class="when">2026.05</div></div>
+        <div>
+          <div class="co">티빙 <small>개발자 접속키 탈취</small></div>
+          <div class="scale"><span class="count" data-to="3954">0</span>만<small>개 계정 유출 (중복 포함)</small></div>
+          <div class="cause">접속키를 소스코드에 그대로 노출했고, 2024년 모의해킹에서 지적받고도 고치지 않았습니다. 소스코드가 담긴 개발 프로젝트 361건도 함께 유출됐습니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="why-close rv">사고는 결국 사람이 막을 수 있습니다.<span>그래서 저는 만드는 사람이면서 동시에 지키는 사람이 되려 합니다.</span></p>
+    <p class="sources">출처: <a href="https://www.segye.com/newsView/20250704510430" target="_blank" rel="noopener">SKT 조사결과(세계일보)</a> · <a href="https://www.fnnews.com/news/202607301023195193" target="_blank" rel="noopener">KT(파이낸셜뉴스)</a> · <a href="https://www.newsis.com/view/NISX20250918_0003334430" target="_blank" rel="noopener">롯데카드(뉴시스)</a> · <a href="https://m.boannews.com/html/detail.html?idx=141221" target="_blank" rel="noopener">쿠팡(보안뉴스)</a> · <a href="https://www.fnnews.com/news/202609031447014787" target="_blank" rel="noopener">티빙(파이낸셜뉴스)</a> · <a href="https://economist.co.kr/article/view/ecn202609280039" target="_blank" rel="noopener">침해사고 통계(이코노미스트)</a></p>
+  </div>
+</section>
+
+<!-- AWARD -->
+<section id="award">
+  <div class="wrap">
+    <div class="eyebrow rv">03 — AWARD</div>
+    <h2 class="h2 rv">첫 대회, 첫 수상</h2>
+    <div class="spot award rv">
+      <div class="medal"><span>2025<br>장려상</span></div>
+      <div>
+        <h3>K-HiTech 대회 — 장려상</h3>
+        <div class="meta">2025 · TEAM PROJECT · ROLE: SENSOR / IoT</div>
+        <dl>
+          <dt>출품작</dt><dd><b>AZAS</b> — 공사장 인적사고 피해를 최소화하는 스마트 안전모</dd>
+          <dt>맡은 일</dt><dd>안전모에 들어가는 센서와 IoT 통신 파트 담당</dd>
+          <dt>사용 기술</dt><dd>Raspberry Pi · 각종 센서 · LoRa 무선 통신</dd>
+          <dt>배운 점</dt><dd>팀원들과 밤을 새워가며 마감까지 함께 버틴 경험을 통해, 힘든 순간에도 끝까지 협업해 결과물을 완성해내는 끈기와 팀워크를 배웠습니다.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow rv">04 — PROJECTS</div>
+    <h2 class="h2 rv">만들고, <span class="dim">기록하고,</span> 쌓아갑니다</h2>
+    <div class="projects">
+      <div class="spot proj rv">
+        <div class="kind">🏅 AWARD · 2025</div>
+        <div class="num">01</div>
+        <h3>AZAS — 스마트 안전모</h3>
+        <p>공사장 인적사고 피해를 최소화하기 위한 스마트 안전모. 센서와 IoT 파트를 맡았습니다.</p>
+        <div class="chips"><span>Raspberry Pi</span><span>Sensors</span><span>LoRa</span><span>IoT</span></div>
+      </div>
+      <div class="spot proj todo rv d1">
+        <div class="kind">🚩 COMING SOON</div>
+        <div class="num">02</div>
+        <h3>워게임 · CTF Write-up</h3>
+        <p>Dreamhack 등 워게임에서 푼 문제의 풀이 과정을 GitHub에 꾸준히 정리할 예정입니다.</p>
+        <div class="chips"><span>Web</span><span>Pwnable</span><span>Reversing</span></div>
+      </div>
+      <div class="spot proj rv d2">
+        <div class="kind">📜 CERTIFICATE · 준비 중</div>
+        <div class="num">03</div>
+        <h3>자격증 로드맵</h3>
+        <ul class="certs">
+          <li>리눅스마스터 2급 <span>⏳ 준비 중</span></li>
+          <li>네트워크관리사 2급 <span>⏳ 준비 중</span></li>
+          <li>정보처리기사 <span>⏳ 준비 중</span></li>
+          <li class="main">정보보안기사 🎯 <span>⏳ 최종 목표</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow rv">05 — SKILLS</div>
+    <h2 class="h2 rv">다룰 줄 아는 것, <span class="dim">배우고 있는 것</span></h2>
+  </div>
+  <div class="marquee rv">
+    <div class="track" id="track"></div>
+  </div>
+  <div class="wrap">
+    <div class="skill-grid">
+      <div class="spot sk rv">
+        <h4>// languages</h4>
+        <div class="bar"><div class="row"><span>Python</span><em>프로젝트 경험</em></div><div class="t"><div class="f" data-w="65"></div></div></div>
+        <div class="bar"><div class="row"><span>C / C++</span><em>수업에서 사용</em></div><div class="t"><div class="f" data-w="60"></div></div></div>
+        <div class="bar"><div class="row"><span>Java</span><em>학습 중</em></div><div class="t"><div class="f" data-w="45"></div></div></div>
+      </div>
+      <div class="spot sk rv d1">
+        <h4>// security</h4>
+        <div class="bar"><div class="row"><span>Linux</span><em>학습 중</em></div><div class="t"><div class="f" data-w="45"></div></div></div>
+        <div class="bar"><div class="row"><span>네트워크 (TCP/IP)</span><em>학습 중</em></div><div class="t"><div class="f" data-w="40"></div></div></div>
+        <div class="bar"><div class="row"><span>웹 해킹 기초</span><em>입문</em></div><div class="t"><div class="f" data-w="30"></div></div></div>
+        <div class="bar"><div class="row"><span>Burp Suite · Wireshark</span><em>입문</em></div><div class="t"><div class="f" data-w="25"></div></div></div>
+      </div>
+      <div class="spot sk rv d2">
+        <h4>// hardware &amp; tools</h4>
+        <div class="bar"><div class="row"><span>Raspberry Pi · 센서</span><em>프로젝트 경험</em></div><div class="t"><div class="f" data-w="60"></div></div></div>
+        <div class="bar"><div class="row"><span>LoRa 통신</span><em>프로젝트 경험</em></div><div class="t"><div class="f" data-w="55"></div></div></div>
+        <div class="bar"><div class="row"><span>Git / GitHub</span><em>사용 가능</em></div><div class="t"><div class="f" data-w="55"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="wrap">
+    <div class="eyebrow rv">06 — JOURNEY</div>
+    <h2 class="h2 rv">지금까지, <span class="grad-text">그리고 앞으로</span></h2>
+    <div class="tl" id="tl">
+      <div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>
+      <div class="ti"><div class="d">2023.03</div><h4>경성대학교 소프트웨어학과 입학</h4><p>프로그래밍 기초와 컴퓨터공학 기본기를 쌓기 시작했습니다.</p></div>
+      <div class="ti"><div class="d">2023.08 – 2025.02</div><h4>군 복무</h4><p>병역 의무를 마치고 학업으로 돌아올 준비를 했습니다.</p></div>
+      <div class="ti"><div class="d">2025.09</div><h4>2학기 복학</h4><p>다시 학교로 돌아와 본격적으로 개발과 보안 공부를 시작했습니다.</p></div>
+      <div class="ti gold"><div class="d">2025</div><h4>K-HiTech 대회 장려상 🏅</h4><p>스마트 안전모 AZAS로 첫 대회에서 수상했습니다.</p></div>
+      <div class="ti"><div class="d">2026</div><h4>2학년 · 포트폴리오 오픈</h4><p>지금까지의 경험을 정리하고 기록을 시작했습니다.</p></div>
+      <div class="ti future"><div class="d">NEXT</div><h4>워게임 꾸준히 풀기 + write-up 정리</h4><p>웹 해킹부터 시작해 시스템 해킹까지 범위를 넓히고, 푼 문제는 빠짐없이 기록하려 합니다.</p></div>
+      <div class="ti future"><div class="d">2학년 겨울방학</div><h4>첫 CTF 참가</h4><p>CTF 대회에 나가 실전 감각을 익힐 계획입니다.</p></div>
+      <div class="ti future"><div class="d">3학년</div><h4>보안 교육 프로그램 · 자격증 도전</h4><p>BoB 같은 보안 인재 양성 프로그램에 지원하고, 리눅스마스터·네트워크관리사부터 정보처리기사, 정보보안기사까지 차근차근 취득하려 합니다.</p></div>
+      <div class="ti goal"><div class="d">FINAL GOAL</div><h4><span class="grad-text">KISA(한국인터넷진흥원) 입사</span> 🎯</h4><p>국가 사이버 보안의 최전선에서 침해사고 대응과 보안 위협 분석에 기여하는 것이 최종 목표입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="eyebrow rv" style="justify-content:center">07 — CONTACT</div>
+    <h2 class="rv">더 <span class="grad-text">안전한 내일</span>을<br>함께 만들어요</h2>
+    <p class="rv d1">보안 스터디, CTF 팀원, 프로젝트 제안 모두 환영합니다.</p>
+    <div class="contact-row rv d2">
+      <button class="btn btn-w mail-btn" id="mailBtn">✉ laverkyul@gmail.com</button>
+      <a class="btn btn-o" href="https://github.com/KimKyul0904" target="_blank" rel="noopener">GitHub @KimKyul0904 ↗</a>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© 2026 Kim Kyul</span><span>About · Why · Award · Projects · Skills · Journey · Contact</span></div></footer>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 터미널 타이핑 */
+const lines = [
+  ['p','$ whoami'],['o','kim_kyul  // 경성대 소프트웨어학과'],
+  ['p','$ cat goal.txt'],['b','KISA(한국인터넷진흥원) 입사'],
+  ['p','$ ls ./awards'],['h','2025_K-HiTech_장려상.txt'],
+  ['p','$ cat ./projects/AZAS'],['o','스마트 안전모 · RPi + Sensors + LoRa'],
+  ['p','$ status'],['o','studying security... ']
+];
+const term = document.getElementById('term');
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+async function typeTerm(){
+  let html='';
+  for(const [cls,txt] of lines){
+    if(cls==='p' && !reduce){
+      for(let i=1;i<=txt.length;i++){
+        term.innerHTML = html + `<span class="p">${esc(txt.slice(0,i))}</span><span class="caret"></span>`;
+        await new Promise(r=>setTimeout(r,38));
+      }
+      html += `<span class="p">${esc(txt)}</span>\n`;
+    } else {
+      html += `<span class="${cls}">${esc(txt)}</span>\n`;
+      term.innerHTML = html + '<span class="caret"></span>';
+      if(!reduce) await new Promise(r=>setTimeout(r,260));
+    }
+  }
+  term.innerHTML = html.replace(/\n$/,'') + '<span class="caret"></span>';
+}
+setTimeout(typeTerm, 600);
+
+/* 등장 + 카운트업 + 스킬바 */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target; el.classList.add('on');
+    el.querySelectorAll('.count').forEach(c=>{
+      const to=+c.dataset.to, t0=performance.now(), dur=1400;
+      (function step(t){const k=Math.min(1,(t-t0)/dur);c.textContent=Math.round(to*(1-Math.pow(1-k,3))).toLocaleString('ko-KR');if(k<1)requestAnimationFrame(step)})(t0);
+    });
+    el.querySelectorAll('.f').forEach(f=>f.style.width=f.dataset.w+'%');
+    io.unobserve(el);
+  });
+},{threshold:.18});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* 스포트라이트 카드 */
+document.querySelectorAll('.spot').forEach(c=>{
+  c.addEventListener('pointermove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    c.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+
+/* 커서 글로우 */
+const glow=document.getElementById('glow');
+addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+
+/* 흐르는 기술 띠 */
+const tech=['Python','C / C++','Java','Linux','TCP/IP','Web Hacking','Burp Suite','Wireshark','Raspberry Pi','LoRa','IoT','Git'];
+const hl=new Set(['Web Hacking','Linux','LoRa','Raspberry Pi']);
+const track=document.getElementById('track');
+track.innerHTML=[...tech,...tech].map(t=>`<span class="${hl.has(t)?'hl':''}">${t}</span><span style="color:var(--line2)">✦</span>`).join('');
+
+/* 스크롤 문장: 단어 단위로 밝아짐 */
+const man=document.getElementById('manifesto');
+man.innerHTML=man.dataset.text.split(' ').map(w=>{
+  const acc=w.startsWith('|'); w=w.replace('|','').replace(/_/g,' ');
+  return `<span class="w${acc?' acc':''}">${w}</span>`;
+}).join(' ');
+const words=[...man.querySelectorAll('.w')];
+
+/* 내비 활성 표시 */
+const links=[...document.querySelectorAll('#navLinks a')];
+const pill=document.getElementById('pill');
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+function movePill(a){
+  if(!a){pill.style.opacity=0;links.forEach(l=>l.classList.remove('active'));return}
+  links.forEach(l=>l.classList.toggle('active',l===a));
+  pill.style.left=a.offsetLeft+'px';pill.style.width=a.offsetWidth+'px';pill.style.opacity=1;
+}
+
+/* 스크롤 처리 */
+const prog=document.getElementById('progress');
+const tl=document.getElementById('tl'), tlFill=document.getElementById('tlFill');
+const tis=[...tl.querySelectorAll('.ti')];
+function onScroll(){
+  const h=document.documentElement, vh=innerHeight;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-vh)*100)+'%';
+
+  // 문장
+  const r=man.getBoundingClientRect();
+  const p=Math.min(1,Math.max(0,(vh*0.85-r.top)/(r.height+vh*0.35)));
+  const n=Math.floor(p*words.length*1.05);
+  words.forEach((w,i)=>w.classList.toggle('lit',i<n));
+
+  // 타임라인
+  const tr=tl.getBoundingClientRect();
+  const fill=Math.min(tr.height,Math.max(0,vh*0.6-tr.top));
+  tlFill.style.height=fill+'px';
+  tis.forEach(t=>t.classList.toggle('on',t.offsetTop<fill));
+
+  // 내비
+  let cur=null;
+  secs.forEach((s,i)=>{if(s && s.getBoundingClientRect().top<vh*0.4)cur=links[i]});
+  movePill(cur);
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll);
+onScroll();
+
+/* 이메일 복사 */
+document.getElementById('mailBtn').addEventListener('click',async()=>{
+  const t=document.getElementById('toast');
+  try{await navigator.clipboard.writeText('laverkyul@gmail.com');t.textContent='✓ 이메일 주소가 복사됐어요';}
+  catch(e){t.textContent='laverkyul@gmail.com';}
+  setTimeout(()=>t.textContent='',2600);
+});
+</script>
+</body>
+</html>
