@@ -49,6 +49,10 @@ WebProgramming/
 │   ├── Problem/        # 1~10: 이벤트 처리 (onblur/onfocus, onkeydown, onmousemove, onwheel, 이벤트 target), 계산기
 │   └── OpenChallenge/  # 마우스 클릭으로 이미지 옮기기(9.html)
 │
+├── 1111 WebProgramming/
+│   ├── Problem/        # 01~09: BOM(window.open, navigator, screen), setTimeout/setInterval 타이머, 시계·산수 문제 채점
+│   └── OpenChallenge/  # 눈 내리는 마을 애니메이션(10.html)
+│
 ├── IntroducePage/      # 자기소개 페이지 (index.html, css3.css, busan.mp4)
 ├── Portfolio/          # 보안 진로 포트폴리오 사이트 (index.html 한 파일)
 └── README.md
@@ -69,6 +73,7 @@ WebProgramming/
 | 10/14 | `1014 WebProgramming` | `Math.random()`, 배열 다루기(`sort`, `split`), `Date` 객체, 객체 생성(생성자 함수), 조건에 따른 배경색 변경 |
 | 10/28 | `1028 WebProgramming` | `getElementById` / `getElementsByTagName`으로 DOM 객체 선택, `style` 속성 변경, `visibility`·`z-index`·`transform`(`rotate`, `scale`), `innerHTML`, `createElement` / `appendChild` / `removeChild`, `addEventListener` |
 | 11/04 | `1104 WebProgramming` | `window.onblur` / `onfocus`, `onchange`(라디오 버튼), `onkeydown`(Enter 키), `onmousemove`(이미지 커서), `ondblclick`, `onwheel`, `onmouseover` / `onmouseout`, 이벤트 객체의 `target`, `onload` |
+| 11/11 | `1111 WebProgramming` | `window.open()`으로 새 창 제어(크기·위치·창 공유), `navigator.userAgent`로 브라우저 판별, `screen` 객체로 해상도 확인, `setTimeout()` / `setInterval()` / `clearInterval()`로 시계 만들기, 타이머를 이용한 자동 채점 산수 퀴즈, 눈 내리는 애니메이션 |
 | - | `IntroducePage` | 지금까지 배운 HTML/CSS를 종합한 자기소개 페이지 |
 | - | `Portfolio` | HTML/CSS/JavaScript를 종합한 인터랙티브 포트폴리오 사이트 |
 
@@ -113,6 +118,15 @@ WebProgramming/
 - **페이지 로드**: `<body onload="init()">`로 문서가 로드된 뒤 이벤트 리스너 등록.
 - **종합 실습**: 버튼 이벤트를 연결한 계산기(Back / CE / C / `=`)와, 10×10 표에서 클릭한 칸으로 이미지가 이동하는 OpenChallenge 제작.
 
+### BOM과 타이머 (11/11)
+
+- **window 객체**: `window.open(url, 이름, 옵션)`으로 `width` / `height` / `left` / `top`을 지정해 새 창을 열고, 새 창의 `document.write()`·`document.title`·`style.backgroundColor`를 제어. 창 이름을 같게 주면 하나의 창을 공유(`select`의 `onchange`로 사이트 접속).
+- **navigator 객체**: `navigator.userAgent`를 소문자로 바꾼 뒤 `indexOf("chrome")`으로 Chrome 브라우저 여부를 감별.
+- **screen 객체**: `screen.width` / `screen.height`가 1280×1024보다 작으면 `alert()`으로 해상도 경고 출력.
+- **타이머**: `setTimeout()`을 재귀 호출해 1초마다 갱신되는 시계를, `setInterval()` / `clearInterval()`로 클릭하면 멈췄다 다시 가는 시계를 구현.
+- **산수 퀴즈**: `Math.random()`과 `switch`로 사칙연산 문제를 자동 출제하고, `eval()`과 `Math.floor()`로 채점(오답은 `line-through`). 10초 뒤 자동 채점되는 타이머 버전(`08.html`)도 제작.
+- **OpenChallenge**: 30개의 `*` 눈송이를 `Math.random()` 속도와 `Math.cos()` 흔들림으로 떨어뜨리는 눈 내리는 애니메이션 제작.
+
 ## 🙋 자기소개 페이지 (IntroducePage)
 
 HTML/CSS 실습 내용을 활용해 만든 자기소개 페이지입니다.
@@ -142,7 +156,9 @@ cd WebProgramming
 >
 > `IntroducePage`는 `index.html`을 열면 되고, `css3.css`와 같은 폴더에 있어야 스타일이 적용됩니다.
 >
-> 일부 실습 파일(`1028 WebProgramming`, `1104 WebProgramming` 등)은 `../../media/` 경로의 이미지를 참조하지만 해당 폴더는 저장소에 포함되어 있지 않아, 이미지가 보이지 않을 수 있습니다.
+> `1111 WebProgramming`의 `window.open()` 실습(01~03번)은 브라우저의 팝업 차단 설정에 따라 새 창이 열리지 않을 수 있으니, 이 경우 팝업을 허용해 주세요.
+>
+> 일부 실습 파일(`1028 WebProgramming`, `1104 WebProgramming`, `1111 WebProgramming` 등)은 `../../media/` 경로의 이미지를 참조하지만 해당 폴더는 저장소에 포함되어 있지 않아, 이미지가 보이지 않을 수 있습니다.
 
 ---
 
