@@ -7,6 +7,7 @@
 | `index.html` | 사이트 전체 (HTML·CSS·JavaScript) |
 | `firestore.rules` | Firebase 데이터베이스 보안 규칙 |
 | `README.md` | 이 설명서 |
+| `presentation/jachimate_presentation.pdf` | 발표자료 (13장) |
 
 ## 동작 방식
 
