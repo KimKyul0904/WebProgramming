@@ -55,6 +55,7 @@ WebProgramming/
 │
 ├── IntroducePage/      # 자기소개 페이지 (index.html, css3.css, busan.mp4)
 ├── Jachimate/          # 기말 프로젝트: 자취생 공동구매·나눔 사이트 (Firebase·카카오맵)
+│   └── presentation/   # 발표자료 PDF
 ├── Portfolio/          # 보안 진로 포트폴리오 사이트 (index.html 한 파일)
 └── README.md
 ```
@@ -150,6 +151,7 @@ HTML/CSS 실습 내용을 활용해 만든 자기소개 페이지입니다.
 같은 학교 자취생끼리 생필품을 함께 사고, 남는 물건을 근처 학생에게 나눔할 수 있게 연결하는 웹사이트입니다. Claude(AI)와 함께 기획부터 배포까지 진행했습니다.
 
 - **배포 주소**: https://jachimate.netlify.app
+- **발표자료**: [`Jachimate/presentation/jachimate_presentation.pdf`](Jachimate/presentation/jachimate_presentation.pdf)
 - **핵심 기능**
   - **학교 메일 인증**: Firebase Authentication으로 대학 메일(`ac.kr`)에 인증 메일을 보내고, 인증을 마친 학생만 참여
   - **공동구매 모집**: 품목·인원·마감일 입력 시 1인당 금액 자동 계산, 자주 사는 품목 템플릿, 참여 현황 실시간 반영(Cloud Firestore)
