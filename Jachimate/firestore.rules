@@ -1,0 +1,37 @@
+rules_version = '2';
+// 자취메이트 Firestore 보안 규칙
+// Firebase 콘솔 > Firestore Database > 규칙 탭에 그대로 붙여넣고 [게시]
+// ※ 아래 'ac[.]kr' 부분을 본인 학교 도메인으로 바꾸면 그 학교만 허용 (예: 'pusan[.]ac[.]kr')
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 학교 메일 인증을 마친 사람만
+    function student() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.matches('.*[.]ac[.]kr$');
+    }
+    function isAuthor() { return resource.data.authorId == request.auth.uid; }
+
+    match /buys/{id} {
+      allow read: if student();
+      allow create: if student()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.target >= 2 && request.resource.data.target <= 20;
+      allow delete: if student() && isAuthor();
+      // 참여/취소: 참여자 목록만 바뀌고, 인원을 넘지 않을 때
+      allow update: if student()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['joined'])
+        && request.resource.data.joined.size() <= resource.data.target;
+    }
+
+    match /shares/{id} {
+      allow read: if student();
+      allow create: if student() && request.resource.data.authorId == request.auth.uid;
+      allow delete: if student() && isAuthor();
+      // 신청/취소: 신청자 목록만 바뀔 때
+      allow update: if student()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['requests']);
+    }
+  }
+}

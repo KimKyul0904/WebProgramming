@@ -54,6 +54,7 @@ WebProgramming/
 │   └── OpenChallenge/  # 눈 내리는 마을 애니메이션(10.html)
 │
 ├── IntroducePage/      # 자기소개 페이지 (index.html, css3.css, busan.mp4)
+├── Jachimate/          # 기말 프로젝트: 자취생 공동구매·나눔 사이트 (Firebase·카카오맵)
 ├── Portfolio/          # 보안 진로 포트폴리오 사이트 (index.html 한 파일)
 └── README.md
 ```
@@ -76,6 +77,7 @@ WebProgramming/
 | 11/11 | `1111 WebProgramming` | `window.open()`으로 새 창 제어(크기·위치·창 공유), `navigator.userAgent`로 브라우저 판별, `screen` 객체로 해상도 확인, `setTimeout()` / `setInterval()` / `clearInterval()`로 시계 만들기, 타이머를 이용한 자동 채점 산수 퀴즈, 눈 내리는 애니메이션 |
 | - | `IntroducePage` | 지금까지 배운 HTML/CSS를 종합한 자기소개 페이지 |
 | - | `Portfolio` | HTML/CSS/JavaScript를 종합한 인터랙티브 포트폴리오 사이트 |
+| - | `Jachimate` | 기말 프로젝트: 같은 학교 자취생끼리 공동구매·나눔을 연결하는 웹사이트 |
 
 ## ✨ 핵심 학습 요약
 
@@ -143,6 +145,22 @@ HTML/CSS 실습 내용을 활용해 만든 자기소개 페이지입니다.
 - **CSS**: CSS 변수, `grid` 레이아웃, `@keyframes` 애니메이션(오로라 배경, 흐르는 기술 띠, 그라디언트 텍스트), `@media` 반응형, `prefers-reduced-motion` 대응
 - **JavaScript**: `IntersectionObserver`로 스크롤 등장 효과와 숫자 카운트업, 스크롤 위치에 따라 단어가 밝아지는 문장과 차오르는 타임라인, 현재 섹션을 따라가는 내비게이션 하이라이트, 터미널 타이핑 효과, `navigator.clipboard`로 이메일 복사
 
+## 🏠 기말 프로젝트: 자취메이트 (Jachimate)
+
+같은 학교 자취생끼리 생필품을 함께 사고, 남는 물건을 근처 학생에게 나눔할 수 있게 연결하는 웹사이트입니다. Claude(AI)와 함께 기획부터 배포까지 진행했습니다.
+
+- **배포 주소**: https://jachimate.netlify.app
+- **핵심 기능**
+  - **학교 메일 인증**: Firebase Authentication으로 대학 메일(`ac.kr`)에 인증 메일을 보내고, 인증을 마친 학생만 참여
+  - **공동구매 모집**: 품목·인원·마감일 입력 시 1인당 금액 자동 계산, 자주 사는 품목 템플릿, 참여 현황 실시간 반영(Cloud Firestore)
+  - **내 주변 나눔 지도**: 브라우저 Geolocation으로 현재 위치를 받아 반경 1km(500m·2km·전체 선택) 안의 나눔을 카카오맵에 표시, 지도를 눌러 바로 나눔 등록
+  - **개인정보 보호**: 현재 위치로 올린 나눔은 집이 드러나지 않게 40m 안쪽에서 위치를 살짝 옮겨 저장
+- **보안**: Firestore 보안 규칙(`firestore.rules`)으로 메일 인증을 마친 학교 계정만 읽기·쓰기, 본인 글만 삭제, 모집 인원 초과 참여 차단
+- **마케팅 전략**: SWOT 분석 후 SO·WO·ST 전략(학교 메일 인증, 품목 템플릿, 위치 흩뜨리기)을 실제 기능으로 구현
+- **기술 스택**: HTML/CSS/JavaScript, Firebase(Authentication·Cloud Firestore), 카카오맵 JavaScript API, Netlify
+
+> 설정 방법(Firebase·카카오 키 발급, 보안 규칙, 배포)은 `Jachimate/README.md`에 정리되어 있습니다.
+
 ## ▶️ 실행 방법
 
 각 폴더 안의 `.html` 파일을 다운로드한 뒤, 웹 브라우저(Chrome, Edge 등)로 드래그하거나 더블클릭하여 열면 결과물을 확인할 수 있습니다.
@@ -153,6 +171,8 @@ cd WebProgramming
 ```
 
 > `Portfolio`는 `Portfolio/index.html`을 바로 열면 됩니다.
+>
+> `Jachimate`는 로그인·지도·위치 기능 때문에 파일을 더블클릭하면 동작하지 않습니다. 배포 주소(https://jachimate.netlify.app)로 접속하거나, 폴더에서 `python3 -m http.server 8000`을 실행한 뒤 `http://localhost:8000`으로 열어 주세요.
 >
 > `IntroducePage`는 `index.html`을 열면 되고, `css3.css`와 같은 폴더에 있어야 스타일이 적용됩니다.
 >

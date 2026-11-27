@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자취메이트 – 같은 학교 자취생 공동구매·나눔</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== 색상 모음 (PPT와 같은 색) ===== */
+:root{
+  color-scheme:light;
+  --blue:#2742E6; --blue-d:#1D33C4; --blue-l:#E6E9FC;
+  --bg:#F2F3F7; --card:#FCFCFE; --ink:#14172B; --muted:#5A6072; --line:#E3E6F0;
+  --orange:#C2410C;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;font-size:16px;line-height:1.55}
+button,input,select,textarea{font:inherit;color:inherit}
+.en{font-family:'Poppins','Noto Sans KR',sans-serif}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.muted{color:var(--muted)}
+.center-msg{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center}
+
+/* ===== 상단 메뉴 ===== */
+header.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.top .wrap{display:flex;align-items:center;gap:20px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-family:'Poppins',sans-serif;font-weight:800}
+.mode{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:#FDE9DD;color:#9A3412}
+.mode.live{background:#DDF3E6;color:#166534}
+nav.tabs{display:flex;gap:4px;margin-left:12px}
+.tab{border:0;background:none;padding:10px 16px;border-radius:999px;color:var(--muted);font-weight:700;cursor:pointer}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--blue-l);color:var(--blue)}
+.spacer{flex:1}
+.user-chip{display:flex;flex-direction:column;align-items:flex-end;font-size:13px;line-height:1.3}
+.user-chip .email{color:var(--muted)}
+.verified{color:var(--blue);font-weight:700;font-size:12px;margin-left:4px;white-space:nowrap}
+
+/* ===== 버튼 ===== */
+.btn{border:0;border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer;transition:background .15s,transform .05s}
+.btn:active{transform:translateY(1px)}
+.primary{background:var(--blue);color:#fff}
+.primary:hover{background:var(--blue-d)}
+.ghost{background:var(--blue-l);color:var(--blue)}
+.ghost:hover{background:#D7DCFA}
+.line{background:transparent;border:1.5px solid var(--line)}
+.line:hover{border-color:#C9CEDD}
+.btn:disabled{background:#E3E6F0;color:#7A8094;cursor:not-allowed;border-color:transparent}
+.btn-sm{padding:7px 12px;font-size:14px;border-radius:8px}
+.link{background:none;border:0;color:var(--blue);font-weight:700;cursor:pointer;padding:0;text-decoration:underline}
+:focus-visible{outline:3px solid #8FA0F5;outline-offset:2px}
+
+/* ===== 파란 배너 ===== */
+.hero{background:var(--blue);color:#F7F8FF;border-radius:16px;padding:36px 40px;margin:28px 0;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border:14px solid #4E66EC;border-radius:50%}
+.hero > *{position:relative;z-index:1}
+.hero h1{margin:0 0 6px;font-size:30px;font-weight:900}
+.hero p{margin:0;color:#DCE1FF}
+.stats{display:flex;gap:12px}
+.stat{background:rgba(255,255,255,.13);border-radius:12px;padding:14px 20px;min-width:118px}
+.stat b{display:block;font-family:'Poppins',sans-serif;font-size:28px;line-height:1.2}
+.stat span{font-size:13px;color:#DCE1FF}
+
+/* ===== 필터 ===== */
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:500;font-size:14px}
+.chip:hover{border-color:#C9CEDD}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+select{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);cursor:pointer}
+
+/* ===== 공동구매 카드 ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-bottom:56px}
+.card{background:var(--card);border-radius:14px;padding:24px;box-shadow:0 10px 28px rgba(20,23,43,.06)}
+.buy{display:flex;flex-direction:column}
+.buy h3{margin:12px 0 6px;font-size:19px}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.badge{background:var(--blue-l);color:var(--blue);font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px}
+.dday{font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;color:var(--muted)}
+.dday.urgent{color:var(--orange)}
+.price{margin:0 0 14px}
+.price b{font-size:21px;color:var(--blue)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress div{height:100%;background:var(--blue);border-radius:99px}
+.meta{font-size:14px;color:var(--muted);margin:10px 0 4px}
+.desc{font-size:14px;margin:6px 0 10px}
+.author{font-size:14px;margin:0 0 16px}
+.buy .btn{width:100%;margin-top:auto}
+
+/* ===== 나눔 지도 ===== */
+.share-layout{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;margin-bottom:56px;align-items:start}
+.map-card{padding:16px;position:sticky;top:88px}
+#map{width:100%;height:auto;display:block;border-radius:10px;cursor:crosshair}
+#kmap{width:100%;height:460px;border-radius:10px}
+.map-label{font:700 15px 'Noto Sans KR',sans-serif;fill:#3B4256}
+.map-small{font:500 12px 'Noto Sans KR',sans-serif;fill:#5A6072}
+.pin{cursor:pointer}
+.map-hint{font-size:13px;color:var(--muted);margin:10px 4px 0}
+/* 카카오맵 위 표시 */
+.k-pin{width:24px;height:24px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 3px 8px rgba(20,23,43,.35);cursor:pointer}
+.k-pin.active{width:32px;height:32px;background:var(--ink)}
+.k-place{background:var(--ink);color:#fff;font:700 12px 'Noto Sans KR',sans-serif;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.k-me{width:18px;height:18px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 0 0 10px rgba(39,66,230,.22)}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--card);border-radius:12px;padding:16px 18px;border:2px solid transparent;cursor:pointer;box-shadow:0 6px 18px rgba(20,23,43,.05)}
+.item:hover{border-color:#C9D0F7}
+.item.active{border-color:var(--blue)}
+.item-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.item h4{margin:0;font-size:17px}
+.dist{font-family:'Poppins','Noto Sans KR',sans-serif;font-weight:600;color:var(--blue);font-size:13px;white-space:nowrap}
+.item p{margin:4px 0 12px;font-size:14px}
+.item-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:14px}
+
+/* ===== 로그인 ===== */
+.login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-left{background:var(--blue);color:#F7F8FF;padding:56px 64px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.login-left > *{position:relative;z-index:1}
+.login-left h1{font-size:50px;line-height:1.2;margin:28px 0 16px;font-weight:900}
+.ring{position:absolute !important;z-index:0 !important;right:-130px;bottom:-130px;width:440px;height:440px;border:16px solid #4E66EC;border-radius:50%}
+.feature-list{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+.f{display:flex;gap:12px;align-items:center;font-weight:500}
+.f i{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;font-style:normal;font-family:'Poppins',sans-serif;font-weight:700}
+.login-right{display:flex;align-items:center;justify-content:center;padding:40px 24px}
+.login-box{width:100%;max-width:400px}
+label{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
+input,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+textarea{resize:vertical}
+.err{color:#B42318;font-size:14px;min-height:20px;margin:8px 0 0}
+.ok{color:#166534}
+
+/* ===== 글쓰기 창 ===== */
+dialog{border:0;border-radius:16px;padding:0;width:min(540px,92vw);box-shadow:0 30px 80px rgba(20,23,43,.25);color:var(--ink);background:var(--card)}
+dialog::backdrop{background:rgba(20,23,43,.45)}
+.modal-body{padding:28px;max-height:90vh;overflow:auto}
+.modal-body h2{margin:0 0 4px;font-size:24px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tpls{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.per{font-size:14px;margin:10px 0 0}
+.per b{color:var(--blue)}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+
+/* ===== 내 활동 ===== */
+.me-grid{display:grid;grid-template-columns:320px 1fr;gap:20px;margin:28px 0 56px;align-items:start}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:26px;font-weight:900;margin-bottom:12px}
+.profile h2{margin:0;font-size:22px}
+.score-row{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:12px;padding:14px 16px;margin:18px 0}
+.score{font-family:'Poppins',sans-serif;font-weight:700;color:var(--blue);font-size:22px}
+.sections{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.section-title{font-size:17px;margin:0 0 6px;display:flex;justify-content:space-between}
+.section-title span{color:var(--blue);font-family:'Poppins',sans-serif}
+.mini{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);gap:12px;font-size:15px}
+.mini:last-child{border-bottom:0}
+.mini small{display:block;color:var(--muted);font-size:13px}
+.none{color:var(--muted);font-size:14px;padding:12px 0}
+
+/* ===== 알림 ===== */
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;font-size:15px;z-index:100;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 휴대폰 화면 ===== */
+@media (max-width:900px){
+  .login{grid-template-columns:1fr}
+  .login-left{padding:40px 28px}
+  .login-left h1{font-size:34px}
+  .share-layout,.me-grid,.sections{grid-template-columns:1fr}
+  .map-card{position:static}
+  #kmap{height:340px}
+  .top .wrap{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:10px}
+  nav.tabs{order:3;width:100%;margin-left:0}
+  .user-chip .email{display:none}
+  .hero{padding:28px}
+  .stats{width:100%}
+  .stat{flex:1;min-width:0;padding:12px 14px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<dialog id="modal" aria-labelledby="modalTitle"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+/* =========================================================
+   ★ 설정 ★  키를 넣으면 실제 API로, 비워 두면 데모 모드로 동작
+   자세한 방법은 README.md 참고
+   ========================================================= */
+const CONFIG = {
+  // 본인 학교 이메일 도메인 (예: 'pusan.ac.kr'). 'ac.kr'이면 모든 대학 메일 허용
+  SCHOOL_DOMAIN: 'ac.kr',
+
+  // Firebase 콘솔 > 프로젝트 설정 > 내 앱 > firebaseConfig 값을 그대로 붙여넣기
+  FIREBASE: {
+    apiKey: 'AIzaSyA7RakGDli7TxmCYuHLrCmgSdSOUnwAB1M',
+    authDomain: 'webp-cb390.firebaseapp.com',
+    projectId: 'webp-cb390',
+    storageBucket: 'webp-cb390.firebasestorage.app',
+    messagingSenderId: '705486718538',
+    appId: '1:705486718538:web:c9cf11d69ff67f9a0948b3'
+  },
+
+  // 카카오디벨로퍼스 > 앱 > 플랫폼 키 > JavaScript 키
+  KAKAO_JS_KEY: '33b74e94c47282261d32130cd8cd496b',
+
+  // 내 위치를 찾지 못할 때 쓰는 기준 위치 (경성대학교). 카카오맵이 켜지면 학교 주소로 다시 맞춰요
+  CAMPUS: { lat: 35.1405, lng: 129.0970 },
+  SCHOOL_ADDRESS: '부산 남구 수영로 309',
+
+  // 내 주변 나눔을 보여줄 기본 반경 (m)
+  RADIUS: 1000,
+  // 현재 위치로 글을 올릴 때 집 위치가 그대로 드러나지 않게 살짝 옮기는 거리 (m)
+  PRIVACY_JITTER: 40
+};
+
+const USE_FB = !!(CONFIG.FIREBASE && CONFIG.FIREBASE.apiKey);
+const USE_KAKAO = !!CONFIG.KAKAO_JS_KEY;
+const FB_VER = '10.12.2';
+
+// 반경 선택지 (0 = 전체 보기)
+const RADII = [500, 1000, 2000, 0];
+const radiusLabel = r => r ? (r >= 1000 ? r / 1000 + 'km' : r + 'm') : '전체';
+const CATS = ['전체', '생필품', '식재료', '배달·음식', '기타'];
+// SWOT WO 전략: 자주 사는 품목 템플릿
+const TPLS = [
+  { title: '생수 2L × 12병', cat: '생필품', total: 9900, target: 3 },
+  { title: '휴지 30롤', cat: '생필품', total: 19800, target: 3 },
+  { title: '계란 30구', cat: '식재료', total: 9000, target: 3 },
+  { title: '쌀 10kg', cat: '식재료', total: 32000, target: 4 },
+  { title: '치킨 2마리 배달', cat: '배달·음식', total: 36000, target: 4 }
+];
+
+/* ---------- 도우미 함수 ---------- */
+const $ = s => document.querySelector(s);
+const pad = n => String(n).padStart(2, '0');
+const fmtDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const addDays = n => { const d = today(); d.setDate(d.getDate() + n); return fmtDate(d); };
+const ddayOf = s => { const [y, m, d] = String(s).split('-').map(Number); return Math.round((new Date(y, m - 1, d) - today()) / 864e5); };
+const ddayLabel = n => n < 0 ? '마감' : n === 0 ? 'D-Day' : 'D-' + n;
+const won = n => Number(n).toLocaleString('ko-KR') + '원';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const schoolRe = new RegExp('^[^\\s@]+@([a-z0-9-]+\\.)*' + CONFIG.SCHOOL_DOMAIN.replace(/\./g, '\\.') + '$', 'i');
+
+// 두 지점 사이 거리 (m)
+const distM = (a, b) => {
+  const R = 6371000, rad = d => d * Math.PI / 180;
+  const dLat = rad(b.lat - a.lat), dLng = rad(b.lng - a.lng);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+};
+// 한 지점에서 동쪽·북쪽으로 몇 m 옮긴 위치
+const offsetLL = (p, east, north) => ({ lat: p.lat + north / 111320, lng: p.lng + east / (111320 * Math.cos(p.lat * Math.PI / 180)) });
+// 집 위치가 그대로 드러나지 않게 살짝 옮기기
+const blur = p => { const a = Math.random() * 2 * Math.PI, r = CONFIG.PRIVACY_JITTER * (0.5 + Math.random() / 2); return offsetLL(p, Math.cos(a) * r, Math.sin(a) * r); };
+
+// 현재 위치 (브라우저 위치 권한 사용)
+const GEO = { state: 'idle', pos: null, acc: null };   // idle | loading | ok | denied | error | unsupported
+const here = () => GEO.pos || CONFIG.CAMPUS;
+function locate() {
+  if (!('geolocation' in navigator)) { GEO.state = 'unsupported'; render(); return; }
+  GEO.state = 'loading'; render();
+  navigator.geolocation.getCurrentPosition(p => {
+    GEO.pos = { lat: p.coords.latitude, lng: p.coords.longitude };
+    GEO.acc = Math.round(p.coords.accuracy);
+    GEO.state = 'ok'; render();
+  }, err => { GEO.state = err.code === 1 ? 'denied' : 'error'; render(); },
+  { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+}
+
+/* ---------- 데모 모드 예시 데이터 ---------- */
+function seed() {
+  const B = (id, title, cat, total, target, joined, d, place, desc) => ({ id, title, cat, total, target, joined, deadline: addDays(d), place, desc, author: joined[0], authorId: joined[0], created: +id.slice(1) });
+  const Sh = (id, title, desc, east, north, d, author, requests) => ({ id, title, desc, ...offsetLL(CONFIG.CAMPUS, east, north), until: addDays(d), author, authorId: author, requests, created: +id.slice(1) });
+  return {
+    user: null,
+    buys: [
+      B('b1', '생수 2L × 12병', '생필품', 9900, 3, ['민지', '현우'], 2, '기숙사 1층 로비', '온라인으로 주문해서 기숙사 로비에서 나눠요.'),
+      B('b2', '휴지 30롤', '생필품', 19800, 4, ['서준', '지아', '도윤'], 4, '정문 편의점 앞', '30롤을 4명이 7~8롤씩 나눠요.'),
+      B('b3', '계란 30구', '식재료', 9000, 3, ['하은'], 1, '원룸촌 놀이터', '한 판 사서 10구씩 나눠요. 담아갈 통 챙겨 오세요!'),
+      B('b4', '쌀 10kg', '식재료', 32000, 4, ['태윤', '수아', '민지', '현우'], 3, '후문 앞', '2.5kg씩 소분해서 드려요.'),
+      B('b5', '닭가슴살 30팩', '식재료', 36000, 5, ['지호', '예린'], 6, '후문 앞', '냉동 배송이라 받는 날 바로 나눠요.'),
+      B('b6', '치킨 2마리 배달', '배달·음식', 36000, 4, ['도윤', '지아'], 0, '원룸촌 입구', '오늘 저녁 7시에 같이 시켜요. 배달비도 나눠요.')
+    ],
+    shares: [
+      Sh('s1', '양파 3개', '요리하고 남았어요. 이번 주 안에 가져가 주세요.', 500, -380, 3, '하은', []),
+      Sh('s2', '전공책 「경영학원론」', '필기 조금 있어요. 1학년 신입생 우선!', -110, 340, 7, '서준', ['지아']),
+      Sh('s3', '전자레인지 용기 4개', '이사 가면서 정리해요. 깨끗해요.', -700, 360, 5, '예린', []),
+      Sh('s4', '라면 5봉', '맛이 안 맞아서 나눔해요.', 660, -480, 2, '태윤', ['수아', '민지']),
+      Sh('s5', '접이식 행거', '조립 쉬워요. 직접 가져가셔야 해요.', 400, 250, 4, '지호', []),
+      Sh('s6', '방울토마토 한 팩', '공동구매로 샀는데 양이 많아요.', 120, -210, 1, '민지', [])
+    ]
+  };
+}
+
+/* ---------- 브라우저 저장 ---------- */
+const KEY = 'jachimate-v2', PKEY = 'jachimate-prefs';
+const read = (k, f) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? f; } catch (e) { return f; } };
+const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+
+let LOCAL = USE_FB ? null : read(KEY, null);
+if (!USE_FB && !(LOCAL && LOCAL.buys)) LOCAL = seed();
+const saveLocal = () => { if (!USE_FB) write(KEY, LOCAL); };
+const PREF = Object.assign({ tab: 'buy', radius: CONFIG.RADIUS }, read(PKEY, {}));
+const savePref = () => write(PKEY, PREF);
+
+let CUR = USE_FB ? null : LOCAL.user;          // 로그인한 사람 {id, email, nick, verified}
+let DATA = USE_FB ? { buys: [], shares: [] } : LOCAL;
+let ready = !USE_FB;                            // Firebase 로그인 상태 확인 전엔 false
+let kakaoReady = false;
+const ui = { cat: '전체', sort: 'deadline', active: null, authMode: 'login' };
+const me = () => CUR ? CUR.id : null;
+const findBuy = id => DATA.buys.find(b => b.id === id);
+const findShare = id => DATA.shares.find(s => s.id === id);
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* =========================================================
+   Firebase (로그인 + 실시간 데이터베이스)
+   ========================================================= */
+const fb = {};
+const AUTH_ERR = {
+  'auth/email-already-in-use': '이미 가입된 이메일이에요. 로그인해 주세요.',
+  'auth/invalid-credential': '이메일 또는 비밀번호가 맞지 않아요.',
+  'auth/wrong-password': '이메일 또는 비밀번호가 맞지 않아요.',
+  'auth/user-not-found': '가입되지 않은 이메일이에요.',
+  'auth/weak-password': '비밀번호는 6자 이상으로 정해 주세요.',
+  'auth/invalid-email': '이메일 형식이 올바르지 않아요.',
+  'auth/too-many-requests': '시도가 너무 많아요. 잠시 후 다시 해 주세요.',
+  'auth/network-request-failed': '인터넷 연결을 확인해 주세요.',
+  'auth/unauthorized-domain': '이 사이트 주소가 Firebase 승인된 도메인에 없어요. README를 확인해 주세요.',
+  'permission-denied': '권한이 없어요. 학교 메일 인증과 Firestore 규칙을 확인해 주세요.'
+};
+const errMsg = e => AUTH_ERR[e && e.code] || ('오류가 났어요 (' + ((e && (e.code || e.message)) || '알 수 없음') + ')');
+
+async function initFirebase() {
+  try {
+    const base = `https://www.gstatic.com/firebasejs/${FB_VER}`;
+    const [APP, A, F] = await Promise.all([import(`${base}/firebase-app.js`), import(`${base}/firebase-auth.js`), import(`${base}/firebase-firestore.js`)]);
+    const app = APP.initializeApp(CONFIG.FIREBASE);
+    Object.assign(fb, { auth: A.getAuth(app), db: F.getFirestore(app), A, F });
+    // 로그인 상태가 바뀔 때마다 (새로고침해도 로그인 유지됨)
+    A.onAuthStateChanged(fb.auth, u => {
+      if (u) {
+        CUR = { id: u.uid, email: u.email, nick: u.displayName || u.email.split('@')[0], verified: u.emailVerified };
+        if (u.emailVerified) subscribe();
+      } else {
+        CUR = null; unsubscribe(); DATA = { buys: [], shares: [] };
+      }
+      ready = true; render();
+    });
+  } catch (e) {
+    console.error(e);
+    $('#app').innerHTML = `<div class="center-msg"><div class="card" style="max-width:460px"><h2 style="margin-top:0">Firebase를 불러오지 못했어요</h2><p class="muted">index.html의 CONFIG.FIREBASE 값과 인터넷 연결을 확인해 주세요.</p></div></div>`;
+  }
+}
+
+// 공동구매·나눔 글을 실시간으로 받아오기
+function subscribe() {
+  if (fb.unsubs) return;
+  const { collection, onSnapshot } = fb.F;
+  fb.unsubs = ['buys', 'shares'].map(name => onSnapshot(collection(fb.db, name),
+    snap => { DATA[name] = snap.docs.map(d => ({ id: d.id, ...d.data() })); render(); },
+    err => toast(errMsg(err))));
+}
+function unsubscribe() { if (fb.unsubs) fb.unsubs.forEach(f => f()); fb.unsubs = null; }
+
+/* ---------- 데이터 저장 방식: Firebase / 데모 ---------- */
+const fbStore = {
+  addBuy: o => fb.F.addDoc(fb.F.collection(fb.db, 'buys'), o),
+  join: id => fb.F.updateDoc(fb.F.doc(fb.db, 'buys', id), { joined: fb.F.arrayUnion(me()) }),
+  leave: id => fb.F.updateDoc(fb.F.doc(fb.db, 'buys', id), { joined: fb.F.arrayRemove(me()) }),
+  delBuy: id => fb.F.deleteDoc(fb.F.doc(fb.db, 'buys', id)),
+  addShare: o => fb.F.addDoc(fb.F.collection(fb.db, 'shares'), o),
+  req: id => fb.F.updateDoc(fb.F.doc(fb.db, 'shares', id), { requests: fb.F.arrayUnion(me()) }),
+  unreq: id => fb.F.updateDoc(fb.F.doc(fb.db, 'shares', id), { requests: fb.F.arrayRemove(me()) }),
+  done: id => fb.F.deleteDoc(fb.F.doc(fb.db, 'shares', id))
+};
+const demo = fn => async (...a) => { fn(...a); saveLocal(); render(); };
+const demoStore = {
+  addBuy: demo(o => DATA.buys.push({ id: uid(), ...o })),
+  join: demo(id => { const b = findBuy(id); if (b && !b.joined.includes(me())) b.joined.push(me()); }),
+  leave: demo(id => { const b = findBuy(id); if (b) b.joined = b.joined.filter(n => n !== me()); }),
+  delBuy: demo(id => { DATA.buys = DATA.buys.filter(b => b.id !== id); LOCAL.buys = DATA.buys; }),
+  addShare: demo(o => DATA.shares.push({ id: uid(), ...o })),
+  req: demo(id => { const s = findShare(id); if (s && !s.requests.includes(me())) s.requests.push(me()); }),
+  unreq: demo(id => { const s = findShare(id); if (s) s.requests = s.requests.filter(n => n !== me()); }),
+  done: demo(id => { DATA.shares = DATA.shares.filter(s => s.id !== id); LOCAL.shares = DATA.shares; })
+};
+const store = USE_FB ? fbStore : demoStore;
+async function run(p, okMsg) {
+  try { await p; if (okMsg) toast(okMsg); }
+  catch (e) { console.error(e); toast(errMsg(e)); }
+}
+
+/* =========================================================
+   카카오맵
+   ========================================================= */
+function loadKakao() {
+  const fail = () => { kakaoReady = false; toast('카카오맵을 불러오지 못해 기본 지도로 보여줘요. 키와 도메인 등록을 확인해 주세요.'); render(); };
+  const s = document.createElement('script');
+  s.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&libraries=services&appkey=' + encodeURIComponent(CONFIG.KAKAO_JS_KEY);
+  s.onload = () => {
+    try {
+      window.kakao.maps.load(() => {
+        const done = () => { kakaoReady = true; render(); };
+        // 학교 주소로 기준 위치 다시 맞추기 (내 위치를 못 찾았을 때 사용)
+        try {
+          const sv = window.kakao.maps.services;
+          new sv.Geocoder().addressSearch(CONFIG.SCHOOL_ADDRESS, (d, st) => {
+            if (st === sv.Status.OK && d.length) CONFIG.CAMPUS = { lat: +d[0].y, lng: +d[0].x };
+            done();
+          });
+        } catch (e) { done(); }
+      });
+    } catch (e) { fail(); }
+  };
+  s.onerror = fail;
+  document.head.appendChild(s);
+}
+
+function drawKakao(list) {
+  const el = $('#kmap'); if (!el) return;
+  const k = window.kakao.maps;
+  const LL = p => new k.LatLng(p.lat, p.lng);
+  const center = LL(here());
+  const r = PREF.radius;
+  const map = new k.Map(el, { center, level: r && r <= 500 ? 4 : r && r <= 1000 ? 5 : 6 });
+  const div = (cls, text) => { const d = document.createElement('div'); d.className = cls; if (text) d.textContent = text; return d; };
+
+  // 반경 원
+  if (r) {
+    const circle = new k.Circle({ map, center, radius: r, strokeWeight: 2, strokeColor: '#2742E6', strokeOpacity: 0.7, strokeStyle: 'dash', fillColor: '#2742E6', fillOpacity: 0.06 });
+    try { map.setBounds(circle.getBounds()); } catch (e) {}
+  } else if (list.length) {
+    const b = new k.LatLngBounds(); b.extend(center); list.forEach(s => b.extend(LL(s))); map.setBounds(b);
+  }
+  // 내 위치
+  new k.CustomOverlay({ map, position: center, content: div('k-me'), yAnchor: 0.5, zIndex: 1 });
+  new k.CustomOverlay({ map, position: center, content: div('k-place', GEO.state === 'ok' ? '내 위치' : '학교'), yAnchor: -0.9, zIndex: 2 });
+  // 나눔 핀
+  list.forEach(s => {
+    const d = div('k-pin' + (ui.active === s.id ? ' active' : ''));
+    d.title = s.title;
+    d.addEventListener('click', e => { e.stopPropagation(); selectShare(s.id); });
+    new k.CustomOverlay({ map, position: LL(s), content: d, yAnchor: 0.5, zIndex: ui.active === s.id ? 5 : 3, clickable: true });
+    if (ui.active === s.id) map.setCenter(LL(s));
+  });
+  // 지도 클릭 → 그 위치로 나눔 글쓰기
+  k.event.addListener(map, 'click', e => openShareModal({ lat: e.latLng.getLat(), lng: e.latLng.getLng() }));
+}
+
+/* =========================================================
+   화면 그리기
+   ========================================================= */
+function render() {
+  const app = $('#app');
+  if (!ready) { app.innerHTML = `<div class="center-msg"><p class="muted">불러오는 중…</p></div>`; return; }
+  if (!CUR) { app.innerHTML = loginView(); return; }
+  if (USE_FB && !CUR.verified) { app.innerHTML = verifyView(); return; }
+  const body = PREF.tab === 'buy' ? buyView() : PREF.tab === 'share' ? shareView() : meView();
+  app.innerHTML = headerView() + `<main class="wrap">${body}</main>`;
+  if (PREF.tab === 'share' && $('#kmap')) drawKakao(activeShares());
+  if (PREF.tab === 'share' && GEO.state === 'idle') setTimeout(locate);
+}
+
+/* ---------- 로그인 / 회원가입 ---------- */
+function loginView() {
+  const signup = USE_FB && ui.authMode === 'signup';
+  const form = USE_FB ? `
+    <h2 style="margin:0 0 4px;font-size:28px">${signup ? '회원가입' : '로그인'}</h2>
+    <p class="muted" style="margin:0 0 8px">${signup ? '학교 이메일로 가입하면 인증 메일을 보내 드려요.' : '학교 이메일로 로그인하세요.'}</p>
+    <label for="email">학교 이메일</label>
+    <input id="email" name="email" type="email" placeholder="아이디@ks.ac.kr" autocomplete="email">
+    <p class="muted" style="font-size:13px;margin:6px 0 0">학번이 아니라 학교 웹메일 주소를 입력해요. 예: abc123@ks.ac.kr</p>
+    ${signup ? `<label for="nick">닉네임</label><input id="nick" name="nick" maxlength="10" placeholder="예: 원룸촌자취러">` : ''}
+    <label for="pw">비밀번호</label>
+    <input id="pw" name="pw" type="password" placeholder="6자 이상" autocomplete="${signup ? 'new-password' : 'current-password'}">
+    <p class="err" id="loginErr"></p>
+    <button class="btn primary" style="width:100%;margin-top:6px">${signup ? '가입하고 인증 메일 받기' : '로그인'}</button>
+    <p style="font-size:14px;margin-top:16px">${signup ? '이미 계정이 있나요?' : '아직 계정이 없나요?'}
+      <button type="button" class="link" data-action="auth-mode">${signup ? '로그인' : '회원가입'}</button></p>` : `
+    <h2 style="margin:0 0 4px;font-size:28px">시작하기</h2>
+    <p class="muted" style="margin:0 0 8px">학교 이메일로 인증하고 바로 참여하세요.</p>
+    <label for="email">학교 이메일</label>
+    <input id="email" name="email" type="email" placeholder="아이디@ks.ac.kr" autocomplete="email">
+    <p class="muted" style="font-size:13px;margin:6px 0 0">학번이 아니라 학교 웹메일 주소를 입력해요. 예: abc123@ks.ac.kr</p>
+    <label for="nick">닉네임</label>
+    <input id="nick" name="nick" maxlength="10" placeholder="예: 원룸촌자취러">
+    <p class="err" id="loginErr"></p>
+    <button class="btn primary" style="width:100%;margin-top:6px">학교 인증하고 시작하기</button>
+    <p class="muted" style="font-size:13px;margin-top:14px">데모 모드: 실제 메일은 보내지 않고 학교 도메인(<b>${esc(CONFIG.SCHOOL_DOMAIN)}</b>)인지만 확인해요.</p>`;
+  return `
+  <div class="login">
+    <section class="login-left">
+      <div class="ring" aria-hidden="true"></div>
+      <div>
+        <div class="logo"><span class="logo-mark" style="background:#F7F8FF;color:var(--blue)">J</span>자취메이트</div>
+        <h1>같은 학교 자취생끼리<br>같이 사고, 나눠 쓰자</h1>
+        <p style="color:#DCE1FF;max-width:440px;margin:0">대용량은 공동구매로 나누고, 남는 물건은 근처 학생에게 나눔하세요. 학교 이메일로 인증한 학생만 참여할 수 있어요.</p>
+        <div class="feature-list">
+          <div class="f"><i>1</i>공동구매 모집과 참여</div>
+          <div class="f"><i>2</i>지도에서 내 주변 나눔 찾기</div>
+          <div class="f"><i>3</i>학교 이메일 인증으로 안심 거래</div>
+        </div>
+      </div>
+      <p class="en" style="color:#DCE1FF;font-size:13px;margin:40px 0 0">JACHIMATE · WEB PROGRAMMING PROJECT</p>
+    </section>
+    <section class="login-right"><form class="login-box" id="loginForm" novalidate>${form}</form></section>
+  </div>`;
+}
+
+async function handleLogin(form) {
+  const err = $('#loginErr');
+  const email = form.email.value.trim();
+  const nick = form.nick ? form.nick.value.trim() : '';
+  const signup = !USE_FB || ui.authMode === 'signup';
+  if (!email) { err.textContent = '학교 이메일을 입력해 주세요.'; return; }
+  if (signup && !schoolRe.test(email)) { err.textContent = `학교 이메일(…${CONFIG.SCHOOL_DOMAIN})만 가입할 수 있어요.`; return; }
+  if (signup && nick.length < 2) { err.textContent = '닉네임은 2글자 이상 입력해 주세요.'; return; }
+
+  if (!USE_FB) {   // 데모 모드
+    CUR = LOCAL.user = { id: nick, email, nick, verified: true };
+    saveLocal(); render(); toast(`${nick}님, 학교 인증이 완료됐어요!`); return;
+  }
+  const pw = form.pw.value;
+  const btn = form.querySelector('.primary'); btn.disabled = true;
+  try {
+    if (signup) {
+      const cred = await fb.A.createUserWithEmailAndPassword(fb.auth, email, pw);
+      await fb.A.updateProfile(cred.user, { displayName: nick });
+      await fb.A.sendEmailVerification(cred.user);
+      CUR = { id: cred.user.uid, email, nick, verified: false };
+      render(); toast('인증 메일을 보냈어요. 학교 메일함을 확인해 주세요.');
+    } else {
+      await fb.A.signInWithEmailAndPassword(fb.auth, email, pw);
+    }
+  } catch (e) { err.textContent = errMsg(e); btn.disabled = false; }
+}
+
+function verifyView() {
+  return `
+  <div class="center-msg"><div class="card" style="max-width:480px;text-align:left;padding:36px">
+    <div class="logo" style="margin-bottom:20px"><span class="logo-mark">J</span>자취메이트</div>
+    <h2 style="margin:0 0 8px">학교 메일 인증이 필요해요</h2>
+    <p class="muted" style="margin:0"><b style="color:var(--ink)">${esc(CUR.email)}</b>으로 인증 메일을 보냈어요. 메일의 링크를 누른 뒤 아래 버튼을 눌러 주세요. 메일이 안 보이면 스팸함도 확인해 주세요.</p>
+    <p class="err" id="verifyErr"></p>
+    <button class="btn primary" style="width:100%" data-action="verify-check">메일 인증을 마쳤어요</button>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn line btn-sm" style="flex:1" data-action="verify-resend">인증 메일 다시 보내기</button>
+      <button class="btn line btn-sm" style="flex:1" data-action="logout">다른 계정으로 로그인</button>
+    </div>
+  </div></div>`;
+}
+
+/* ---------- 상단 메뉴 ---------- */
+function headerView() {
+  const tab = (id, label) => `<button class="tab" role="tab" aria-selected="${PREF.tab === id}" data-action="tab" data-tab="${id}">${label}</button>`;
+  const write = PREF.tab === 'buy' ? '+ 공동구매 열기' : PREF.tab === 'share' ? '+ 나눔 올리기' : '';
+  return `
+  <header class="top"><div class="wrap">
+    <div class="logo"><span class="logo-mark">J</span>자취메이트</div>
+    <span class="mode ${USE_FB ? 'live' : ''}" title="${USE_FB ? 'Firebase에 저장 중' : '이 브라우저에만 저장돼요'}">${USE_FB ? '실시간' : '데모 모드'}</span>
+    <nav class="tabs" role="tablist">${tab('buy', '공동구매')}${tab('share', '나눔 지도')}${tab('me', '내 활동')}</nav>
+    <div class="spacer"></div>
+    ${write ? `<button class="btn primary btn-sm" data-action="write">${write}</button>` : ''}
+    <div class="user-chip"><span><b>${esc(CUR.nick)}</b><span class="verified">✓ 학교 인증</span></span><span class="email">${esc(CUR.email)}</span></div>
+  </div></header>`;
+}
+
+/* ---------- 공동구매 탭 ---------- */
+function buyView() {
+  const all = DATA.buys;
+  const open = all.filter(b => ddayOf(b.deadline) >= 0 && b.joined.length < b.target);
+  const mine = all.filter(b => b.joined.includes(me()));
+  const todayEnd = all.filter(b => ddayOf(b.deadline) === 0);
+  const per = b => b.total / b.target;
+  let list = all.filter(b => ui.cat === '전체' || b.cat === ui.cat);
+  if (ui.sort === 'deadline') list.sort((a, b) => (ddayOf(a.deadline) < 0) - (ddayOf(b.deadline) < 0) || ddayOf(a.deadline) - ddayOf(b.deadline));
+  if (ui.sort === 'new') list.sort((a, b) => b.created - a.created);
+  if (ui.sort === 'cheap') list.sort((a, b) => per(a) - per(b));
+  return `
+  <section class="hero">
+    <div><h1>함께 사면 더 싸게</h1><p>대용량 생필품을 같은 학교 자취생과 나눠 사세요.</p></div>
+    <div class="stats">
+      <div class="stat"><b>${open.length}</b><span>모집 중</span></div>
+      <div class="stat"><b>${todayEnd.length}</b><span>오늘 마감</span></div>
+      <div class="stat"><b>${mine.length}</b><span>내가 참여</span></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    ${CATS.map(c => `<button class="chip" aria-pressed="${ui.cat === c}" data-action="cat" data-cat="${c}">${c}</button>`).join('')}
+    <div class="spacer"></div>
+    <select data-action="sort" aria-label="정렬">
+      <option value="deadline" ${ui.sort === 'deadline' ? 'selected' : ''}>마감 임박순</option>
+      <option value="new" ${ui.sort === 'new' ? 'selected' : ''}>최신순</option>
+      <option value="cheap" ${ui.sort === 'cheap' ? 'selected' : ''}>1인 가격 낮은순</option>
+    </select>
+  </div>
+  ${list.length ? `<div class="grid">${list.map(buyCard).join('')}</div>` : `<div class="empty">아직 공동구매가 없어요.<br>오른쪽 위 “공동구매 열기”로 첫 글을 올려 보세요!</div>`}`;
+}
+
+function buyCard(b) {
+  const d = ddayOf(b.deadline), n = b.joined.length;
+  const isMine = b.authorId === me(), joined = b.joined.includes(me()), full = n >= b.target;
+  let btn;
+  if (isMine) btn = `<button class="btn line" disabled>내가 연 공동구매 · ${n}/${b.target}명</button>`;
+  else if (joined) btn = `<button class="btn ghost" data-action="leave" data-id="${esc(b.id)}">참여 중 · 취소하기</button>`;
+  else if (d < 0) btn = `<button class="btn" disabled>마감됨</button>`;
+  else if (full) btn = `<button class="btn" disabled>모집 완료</button>`;
+  else btn = `<button class="btn primary" data-action="join" data-id="${esc(b.id)}">참여하기 · 1인 ${won(Math.ceil(b.total / b.target))}</button>`;
+  return `
+  <article class="card buy">
+    <div class="card-top"><span class="badge">${esc(b.cat)}</span><span class="dday ${d <= 1 && d >= 0 ? 'urgent' : ''}">${ddayLabel(d)}</span></div>
+    <h3>${esc(b.title)}</h3>
+    <p class="price"><b>1인 ${won(Math.ceil(b.total / b.target))}</b> <span class="muted" style="font-size:14px">총 ${won(b.total)}</span></p>
+    <div class="progress" role="progressbar" aria-label="모집 현황" aria-valuemin="0" aria-valuemax="${b.target}" aria-valuenow="${n}"><div style="width:${Math.min(100, n / b.target * 100)}%"></div></div>
+    <p class="meta"><b style="color:var(--ink)">${n}/${b.target}명</b> 참여 · ${esc(b.place)}</p>
+    ${b.desc ? `<p class="desc">${esc(b.desc)}</p>` : ''}
+    <p class="author">${esc(b.author)}<span class="verified">✓ 학교 인증</span></p>
+    ${btn}
+  </article>`;
+}
+
+/* ---------- 나눔 지도 탭 ---------- */
+const distOf = s => (s.lat != null ? distM(here(), s) : Infinity);
+function distLabel(m) {
+  if (!isFinite(m)) return '위치 정보 없음';
+  const walk = Math.max(1, Math.round(m / 67));
+  const d = m < 1000 ? Math.max(10, Math.round(m / 10) * 10) + 'm' : (m / 1000).toFixed(1) + 'km';
+  return `약 ${d} · 도보 ${walk}분`;
+}
+const activeShares = () => DATA.shares
+  .filter(s => ddayOf(s.until) >= 0 && s.lat != null && (!PREF.radius || distOf(s) <= PREF.radius))
+  .sort((a, b) => distOf(a) - distOf(b));
+function locText() {
+  if (GEO.state === 'ok') return `현재 위치 기준${GEO.acc ? ` · 정확도 약 ${GEO.acc}m` : ''}`;
+  if (GEO.state === 'loading') return '내 위치를 찾는 중…';
+  if (GEO.state === 'denied') return '위치 권한이 꺼져 있어 학교 기준으로 보여줘요';
+  if (GEO.state === 'unsupported') return '위치를 지원하지 않는 브라우저라 학교 기준으로 보여줘요';
+  if (GEO.state === 'error') return '위치를 찾지 못해 학교 기준으로 보여줘요';
+  return '학교 기준';
+}
+
+function shareView() {
+  const list = activeShares();
+  const kakao = USE_KAKAO && kakaoReady;
+  const r = PREF.radius, rl = radiusLabel(r);
+  return `
+  <section class="hero">
+    <div><h1>남는 물건, 버리지 말고 나눠요</h1><p>내 주변 나눔을 지도에서 찾고 바로 신청하세요.</p></div>
+    <div class="stats">
+      <div class="stat"><b>${list.length}</b><span>${r ? `반경 ${rl} 안 나눔` : '진행 중 나눔'}</span></div>
+      <div class="stat"><b>${DATA.shares.filter(s => s.requests.includes(me())).length}</b><span>내가 신청</span></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <b>내 주변</b>
+    <select data-action="radius" aria-label="보여줄 반경">
+      ${RADII.map(v => `<option value="${v}" ${v === r ? 'selected' : ''}>${v ? '반경 ' + radiusLabel(v) : '전체 보기'}</option>`).join('')}
+    </select>
+    <span class="muted" style="font-size:14px">${locText()}</span>
+    <div class="spacer"></div>
+    <button class="btn line btn-sm" data-action="relocate" ${GEO.state === 'loading' ? 'disabled' : ''}>내 위치 다시 찾기</button>
+  </div>
+  <div class="share-layout">
+    <div class="card map-card">${kakao ? '<div id="kmap" aria-label="카카오맵 나눔 지도"></div>' : mapSvg(list)}
+      <p class="map-hint">${kakao ? '카카오맵' : '기본 지도'} · 지도를 누르면 그 위치에 나눔 글을 올릴 수 있어요. 파란 핀을 누르면 해당 글을 보여줘요.</p></div>
+    <div class="list">${list.length ? list.map(shareItem).join('') : `<div class="empty">${r ? `반경 ${rl} 안에 진행 중인 나눔이 없어요.<br>반경을 넓히거나 첫 나눔을 올려 보세요.` : '아직 진행 중인 나눔이 없어요.'}</div>`}</div>
+  </div>`;
+}
+
+// 기본 지도 (카카오맵이 없을 때): 내 위치를 가운데 둔 레이더
+const RADAR = { scale: 1 };   // 1m가 몇 칸인지
+function mapSvg(list) {
+  const r = PREF.radius || Math.max(500, ...list.map(distOf).filter(isFinite));
+  RADAR.scale = 180 / r;
+  const c = here(), cos = Math.cos(c.lat * Math.PI / 180);
+  const xy = s => ({ x: 300 + (s.lng - c.lng) * 111320 * cos * RADAR.scale, y: 210 - (s.lat - c.lat) * 111320 * RADAR.scale });
+  const rings = [0.5, 1].map(f => `
+    <circle cx="300" cy="210" r="${180 * f}" fill="none" stroke="#B9C2F5" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="306" y="${210 - 180 * f - 6}" class="map-small">${radiusLabel(Math.round(r * f))}</text>`).join('');
+  const pins = list.map(s => {
+    const act = ui.active === s.id, p = xy(s);
+    return `<g class="pin" data-pin="${esc(s.id)}" tabindex="0" role="button" aria-label="${esc(s.title)}">
+      <title>${esc(s.title)}</title>
+      <circle cx="${p.x}" cy="${p.y}" r="${act ? 15 : 11}" fill="${act ? '#14172B' : '#2742E6'}" stroke="#FCFCFE" stroke-width="3"/>
+    </g>`;
+  }).join('');
+  return `
+  <svg id="map" viewBox="0 0 600 420" role="img" aria-label="내 주변 나눔 지도">
+    <rect width="600" height="420" fill="#E9ECF5"/>
+    <circle cx="300" cy="210" r="180" fill="#DDE2FB" opacity=".55"/>
+    ${rings}
+    <circle cx="300" cy="210" r="9" fill="#14172B" stroke="#FCFCFE" stroke-width="3"/>
+    <text x="300" y="238" text-anchor="middle" class="map-label">${GEO.state === 'ok' ? '내 위치' : '학교'}</text>
+    ${pins}
+  </svg>`;
+}
+
+function shareItem(s) {
+  const isMine = s.authorId === me(), req = s.requests.includes(me()), id = esc(s.id);
+  let btn;
+  if (isMine) btn = `<span>신청 ${s.requests.length}명</span><button class="btn ghost btn-sm" data-action="done" data-id="${id}">나눔 완료</button>`;
+  else if (req) btn = `<button class="btn ghost btn-sm" data-action="unreq" data-id="${id}">신청함 · 취소</button>`;
+  else btn = `<button class="btn primary btn-sm" data-action="req" data-id="${id}">나눔 신청</button>`;
+  return `
+  <div class="item ${ui.active === s.id ? 'active' : ''}" data-action="select" data-id="${id}" id="item-${id}">
+    <div class="item-head"><h4>${esc(s.title)}</h4><span class="dist">${distLabel(distOf(s))}</span></div>
+    <p class="muted">${esc(s.desc)}</p>
+    <div class="item-foot"><span>${esc(s.author)}<span class="verified">✓</span> · ${ddayLabel(ddayOf(s.until))}까지</span><span style="display:flex;gap:8px;align-items:center">${btn}</span></div>
+  </div>`;
+}
+
+/* ---------- 내 활동 탭 ---------- */
+function meView() {
+  const myBuys = DATA.buys.filter(b => b.authorId === me());
+  const joinBuys = DATA.buys.filter(b => b.authorId !== me() && b.joined.includes(me()));
+  const myShares = DATA.shares.filter(s => s.authorId === me());
+  const reqShares = DATA.shares.filter(s => s.requests.includes(me()));
+  const sec = (title, arr, row) => `
+    <div class="card"><h3 class="section-title">${title}<span>${arr.length}</span></h3>
+      ${arr.length ? arr.map(row).join('') : `<p class="none">아직 없어요.</p>`}</div>`;
+  return `
+  <div class="me-grid">
+    <div class="card profile">
+      <div class="avatar">${esc(CUR.nick.charAt(0))}</div>
+      <h2>${esc(CUR.nick)}</h2>
+      <p class="muted" style="margin:2px 0 0;font-size:14px">${esc(CUR.email)}</p>
+      <p style="margin:6px 0 0"><span class="verified" style="margin:0">✓ 학교 인증 완료</span></p>
+      <div class="score-row"><div><b>신뢰 점수</b><br><small class="muted">거래 후기 기능 준비 중</small></div><span class="score">★ 5.0</span></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn line btn-sm" data-action="logout" style="flex:1">로그아웃</button>
+        ${USE_FB ? '' : '<button class="btn line btn-sm" data-action="reset" style="flex:1">예시 데이터로 초기화</button>'}
+      </div>
+    </div>
+    <div class="sections">
+      ${sec('내가 연 공동구매', myBuys, b => `<div class="mini"><div>${esc(b.title)}<small>${b.joined.length}/${b.target}명 · ${ddayLabel(ddayOf(b.deadline))}</small></div><button class="btn line btn-sm" data-action="del-buy" data-id="${esc(b.id)}">삭제</button></div>`)}
+      ${sec('참여 중인 공동구매', joinBuys, b => `<div class="mini"><div>${esc(b.title)}<small>${esc(b.place)} · ${ddayLabel(ddayOf(b.deadline))}</small></div><button class="btn line btn-sm" data-action="leave" data-id="${esc(b.id)}">참여 취소</button></div>`)}
+      ${sec('내 나눔', myShares, s => `<div class="mini"><div>${esc(s.title)}<small>신청 ${s.requests.length}명 · ${ddayLabel(ddayOf(s.until))}까지</small></div><button class="btn line btn-sm" data-action="done" data-id="${esc(s.id)}">나눔 완료</button></div>`)}
+      ${sec('신청한 나눔', reqShares, s => `<div class="mini"><div>${esc(s.title)}<small>${esc(s.author)} · ${distLabel(distOf(s))}</small></div><button class="btn line btn-sm" data-action="unreq" data-id="${esc(s.id)}">신청 취소</button></div>`)}
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   글쓰기 창
+   ========================================================= */
+const dlg = $('#modal');
+function openModal(html, onSubmit, onInput) {
+  dlg.innerHTML = `<form class="modal-body" novalidate>${html}</form>`;
+  const form = dlg.querySelector('form');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const err = await onSubmit(form);
+    if (err) form.querySelector('.err').textContent = err;
+    else dlg.close();
+  });
+  if (onInput) { form.addEventListener('input', () => onInput(form)); onInput(form); }
+  dlg.showModal();
+  const first = form.querySelector('input'); if (first) first.focus();
+}
+dlg.addEventListener('click', e => {
+  if (e.target === dlg || e.target.closest('[data-close]')) { dlg.close(); return; }
+  const tpl = e.target.closest('[data-tpl]');
+  if (tpl) {
+    const t = TPLS[tpl.dataset.tpl], f = dlg.querySelector('form');
+    f.title.value = t.title; f.cat.value = t.cat; f.total.value = t.total; f.target.value = t.target;
+    f.dispatchEvent(new Event('input'));
+  }
+});
+
+function confirmModal(msg, yesLabel, onYes) {
+  openModal(`
+    <h2 id="modalTitle">${msg}</h2>
+    <p class="err" style="min-height:0"></p>
+    <div class="modal-actions"><button type="button" class="btn line" data-close>취소</button><button class="btn primary">${yesLabel}</button></div>`,
+  () => { onYes(); });
+}
+
+function openBuyModal() {
+  openModal(`
+    <h2 id="modalTitle">공동구매 열기</h2>
+    <p class="muted" style="margin:0">자주 사는 품목은 템플릿을 눌러 빠르게 채울 수 있어요.</p>
+    <div class="tpls">${TPLS.map((t, i) => `<button type="button" class="chip" data-tpl="${i}">${t.title}</button>`).join('')}</div>
+    <label for="f-title">품목</label><input id="f-title" name="title" maxlength="40" placeholder="예: 생수 2L × 12병">
+    <div class="row2">
+      <div><label for="f-cat">카테고리</label><select id="f-cat" name="cat" style="width:100%;padding:12px">${CATS.slice(1).map(c => `<option>${c}</option>`).join('')}</select></div>
+      <div><label for="f-dl">마감일</label><input id="f-dl" name="deadline" type="date" min="${addDays(0)}" value="${addDays(3)}"></div>
+    </div>
+    <div class="row2">
+      <div><label for="f-total">총 가격(원)</label><input id="f-total" name="total" type="number" min="1000" step="100" placeholder="9900"></div>
+      <div><label for="f-target">모집 인원(나 포함)</label><input id="f-target" name="target" type="number" min="2" max="20" value="3"></div>
+    </div>
+    <p class="per" id="per">1인당 금액이 여기에 계산돼요.</p>
+    <label for="f-place">만날 장소</label><input id="f-place" name="place" maxlength="30" placeholder="예: 기숙사 1층 로비">
+    <label for="f-desc">설명 (선택)</label><textarea id="f-desc" name="desc" rows="2" maxlength="200" placeholder="나누는 방법, 준비물 등"></textarea>
+    <p class="err"></p>
+    <div class="modal-actions"><button type="button" class="btn line" data-close>취소</button><button class="btn primary">등록하기</button></div>`,
+  async f => {
+    const title = f.title.value.trim(), total = +f.total.value, target = +f.target.value, place = f.place.value.trim(), deadline = f.deadline.value;
+    if (!title) return '품목을 입력해 주세요.';
+    if (!total || total < 1000) return '총 가격을 1,000원 이상으로 입력해 주세요.';
+    if (!target || target < 2 || target > 20) return '모집 인원은 2~20명으로 정해 주세요.';
+    if (!deadline || ddayOf(deadline) < 0) return '마감일은 오늘 이후로 골라 주세요.';
+    if (!place) return '만날 장소를 입력해 주세요.';
+    try {
+      await store.addBuy({ title, cat: f.cat.value, total, target, joined: [me()], deadline, place, desc: f.desc.value.trim(), author: CUR.nick, authorId: me(), created: Date.now() });
+      toast('공동구매를 열었어요! 참여자를 기다려 볼게요.');
+    } catch (e) { return errMsg(e); }
+  },
+  f => {
+    const total = +f.total.value, target = +f.target.value;
+    $('#per').innerHTML = total && target >= 2 ? `1인당 <b>${won(Math.ceil(total / target))}</b> (총 ${won(total)} ÷ ${target}명)` : '1인당 금액이 여기에 계산돼요.';
+  });
+}
+
+function openShareModal(picked) {
+  const gps = GEO.state === 'ok';
+  const opts = `${picked ? '<option value="picked" selected>지도에서 고른 위치</option>' : ''}
+    <option value="here" ${picked ? '' : 'selected'}>${gps ? '현재 내 위치 근처' : '학교 근처'}</option>`;
+  openModal(`
+    <h2 id="modalTitle">나눔 올리기</h2>
+    <p class="muted" style="margin:0">남는 물건을 근처 학생에게 나눠 주세요.</p>
+    <label for="s-title">물건</label><input id="s-title" name="title" maxlength="40" placeholder="예: 양파 3개">
+    <label for="s-desc">설명</label><textarea id="s-desc" name="desc" rows="2" maxlength="200" placeholder="상태, 가져가는 방법 등"></textarea>
+    <div class="row2">
+      <div><label for="s-loc">위치</label><select id="s-loc" name="loc" style="width:100%;padding:12px">${opts}</select></div>
+      <div><label for="s-until">나눔 기한</label><input id="s-until" name="until" type="date" min="${addDays(0)}" value="${addDays(3)}"></div>
+    </div>
+    <p class="muted" style="font-size:13px;margin:8px 0 0">${gps ? `현재 위치는 집이 드러나지 않게 ${CONFIG.PRIVACY_JITTER}m 안쪽에서 살짝 옮겨 표시해요.` : '위치 권한을 켜면 현재 위치로 올릴 수 있어요.'}</p>
+    <p class="err"></p>
+    <div class="modal-actions"><button type="button" class="btn line" data-close>취소</button><button class="btn primary">올리기</button></div>`,
+  async f => {
+    const title = f.title.value.trim(), until = f.until.value;
+    if (!title) return '나눌 물건을 입력해 주세요.';
+    if (!until || ddayOf(until) < 0) return '나눔 기한은 오늘 이후로 골라 주세요.';
+    const pos = f.loc.value === 'picked' ? picked : blur(here());
+    try {
+      await store.addShare({ title, desc: f.desc.value.trim() || '설명 없음', lat: pos.lat, lng: pos.lng, until, author: CUR.nick, authorId: me(), requests: [], created: Date.now() });
+      toast('나눔을 올렸어요! 지도에 핀이 생겼어요.');
+    } catch (e) { return errMsg(e); }
+  });
+}
+
+/* =========================================================
+   클릭 처리
+   ========================================================= */
+function selectShare(id) {
+  ui.active = id;
+  render();
+  const el = document.getElementById('item-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+document.addEventListener('submit', e => {
+  if (e.target.id === 'loginForm') { e.preventDefault(); handleLogin(e.target); }
+});
+
+document.addEventListener('click', async e => {
+  const pin = e.target.closest('[data-pin]');
+  if (pin) { selectShare(pin.dataset.pin); return; }
+
+  const a = e.target.closest('[data-action]');
+  if (!a) {
+    const map = e.target.closest('#map');   // 기본 지도 빈 곳 클릭 → 그 위치로 글쓰기
+    if (map) {
+      const pt = map.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      const p = pt.matrixTransform(map.getScreenCTM().inverse());
+      openShareModal(offsetLL(here(), (p.x - 300) / RADAR.scale, (210 - p.y) / RADAR.scale));
+    }
+    return;
+  }
+  const id = a.dataset.id;
+  switch (a.dataset.action) {
+    case 'tab': PREF.tab = a.dataset.tab; savePref(); render(); window.scrollTo(0, 0); break;
+    case 'write': PREF.tab === 'buy' ? openBuyModal() : openShareModal(); break;
+    case 'cat': ui.cat = a.dataset.cat; render(); break;
+    case 'relocate': locate(); break;
+    case 'auth-mode': ui.authMode = ui.authMode === 'login' ? 'signup' : 'login'; render(); break;
+    case 'join': {
+      const b = findBuy(id); if (!b || b.joined.length >= b.target) return;
+      const left = b.target - b.joined.length - 1;
+      run(store.join(id), left <= 0 ? `모집 완료! ${b.place}에서 만나요.` : `참여했어요! ${left}명만 더 모이면 돼요.`);
+      break;
+    }
+    case 'leave': run(store.leave(id), '참여를 취소했어요.'); break;
+    case 'del-buy': confirmModal('이 공동구매를 삭제할까요?', '삭제하기', () => run(store.delBuy(id), '삭제했어요.')); break;
+    case 'select': if (!e.target.closest('button')) selectShare(id); break;
+    case 'req': { const s = findShare(id); run(store.req(id), `신청했어요! ${s ? s.author + '님이' : '작성자가'} 확인할 거예요.`); break; }
+    case 'unreq': run(store.unreq(id), '신청을 취소했어요.'); break;
+    case 'done': run(store.done(id), '나눔 완료! 좋은 일 하셨어요.'); break;
+    case 'logout':
+      if (USE_FB) { await fb.A.signOut(fb.auth); toast('로그아웃했어요.'); }
+      else { CUR = LOCAL.user = null; PREF.tab = 'buy'; saveLocal(); savePref(); render(); toast('로그아웃했어요.'); }
+      break;
+    case 'reset':
+      confirmModal('예시 데이터로 되돌릴까요? 내가 쓴 글은 사라져요.', '초기화하기', () => {
+        const u = LOCAL.user; LOCAL = seed(); LOCAL.user = u; DATA = LOCAL; ui.active = null; saveLocal(); render(); toast('예시 데이터로 초기화했어요.');
+      });
+      break;
+    case 'verify-check': {
+      const u = fb.auth.currentUser; if (!u) return;
+      await u.reload();
+      if (u.emailVerified) {
+        await u.getIdToken(true);   // 인증 정보 새로고침 (데이터베이스 규칙에 반영)
+        CUR = { id: u.uid, email: u.email, nick: u.displayName || CUR.nick, verified: true };
+        subscribe(); render(); toast('학교 인증이 완료됐어요!');
+      } else $('#verifyErr').textContent = '아직 인증되지 않았어요. 메일의 링크를 먼저 눌러 주세요.';
+      break;
+    }
+    case 'verify-resend':
+      try { await fb.A.sendEmailVerification(fb.auth.currentUser); toast('인증 메일을 다시 보냈어요.'); }
+      catch (err) { $('#verifyErr').textContent = errMsg(err); }
+      break;
+  }
+});
+
+document.addEventListener('change', e => {
+  const a = e.target.closest('[data-action]');
+  if (!a) return;
+  if (a.dataset.action === 'sort') { ui.sort = a.value; render(); }
+  if (a.dataset.action === 'radius') { PREF.radius = +a.value; savePref(); render(); }
+});
+
+document.addEventListener('keydown', e => {   // 키보드로 지도 핀 선택
+  const pin = e.target.closest && e.target.closest('[data-pin]');
+  if (pin && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); selectShare(pin.dataset.pin); }
+});
+
+/* ---------- 시작 ---------- */
+render();
+if (USE_FB) initFirebase();
+if (USE_KAKAO) loadKakao();
+</script>
+</body>
+</html>
